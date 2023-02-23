@@ -4,6 +4,13 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 
+# Custom modules
+# from modules import gimbal
+# from modules import toggle
+# from modules import hexapod
+# from modules import joystick
+from modules import utility
+
 # Read Configuration
 config = configparser.ConfigParser()
 config.read("config.ini")

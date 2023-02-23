@@ -27,7 +27,6 @@
             const socket = io('localhost:5000');
 
             window.onbeforeunload = () => {
-                this.ui.clear();
                 this.socket.emit('disconnect');
             };
 
@@ -51,39 +50,49 @@
                 rotate_mode: false,
                 body_up: 50,
                 walk_speed: 50,
-                left_joystick: [0, 0],
                 switch_gait: false,
                 adjust_leg_position: false,
                 bot_on_off: false,
                 toggle_lights: false,
                 toggle_laser: false,
-                gimbal: {
-                    x: 0,
-                    y: 0,
-                    z: 0,
-                },
                 double_speed: false,
                 double_gait: false,
                 walk_pos: false,
                 single_leg: false,
                 balance_mode: false,
+            };
+
+            const joystick = {
+                left_joystick: [0, 0],
                 right_joystick: [0, 0],
+            };
+
+            const gimbal = {
+                x: 0,
+                y: 0,
+                z: 0,
             };
 
             return {
                 socket,
                 ui,
                 data,
+                joystick,
+                gimbal,
             };
         },
         methods: {
-            updateValues(value, key) {
-                this.data[key] = value;
-                console.log(this.data.right_joystick);
+            updateButton(value, key) {
+                !this.data[key];
+                console.log(value, this.data);
             },
-            updateButton(key) {
-                this.data[key] = !this.data[key];
-                console.log(this.data);
+            updateJoystick(value, key) {
+                this.joystick[key] = value;
+                console.log(this.joystick);
+            },
+            updateGimbal(value, key) {
+                this.gimbal[key] = value;
+                console.log(this.gimbal);
             },
             onWindowResize() {
                 let w = window.innerWidth / 3;
@@ -92,28 +101,28 @@
                 }
             },
             generateUI() {
-                this.maxW = window.innerWidth / 3;
+                this.maxW = Math.floor(window.innerWidth / 3 - 1);
 
                 this.ui.left = new UIL.Gui({
                     css: 'top:0; left:50%;',
                     center: true,
                     w: this.maxW,
                     target: document.querySelector('#left'),
-                }).onChange(this.updateValues);
+                }); // .onChange(this.updateValues);
 
                 this.ui.center = new UIL.Gui({
                     css: 'top:0; left:50%;',
                     center: true,
                     w: this.maxW,
                     target: document.querySelector('#center'),
-                }).onChange(this.updateValues);
+                }); // .onChange(this.updateValues);
 
                 this.ui.right = new UIL.Gui({
                     css: 'top:0; left:50%;',
                     center: true,
                     w: this.maxW,
                     target: document.querySelector('#right'),
-                }).onChange(this.updateValues);
+                }); // .onChange(this.updateValues);
 
                 this.ui.left.add('title', { name: 'Left' });
                 this.ui.left
@@ -133,29 +142,35 @@
                     })
                     .onChange(this.updateButton);
                 this.ui.left.add('empty', { h: 5 });
-                this.ui.left.add(this.data, 'body_up', {
-                    rename: 'Body Position',
-                    type: 'slide',
-                    min: 0,
-                    max: 100,
-                    precision: 1,
-                    step: 1,
-                });
-                this.ui.left.add(this.data, 'walk_speed', {
-                    rename: 'Walk Speed',
-                    type: 'slide',
-                    min: 0,
-                    max: 100,
-                    precision: 1,
-                    step: 1,
-                });
-                this.ui.left.add(this.data, 'left_joystick', {
-                    type: 'joystick',
-                    rename: 'Move',
-                    multiplicator: 1,
-                    precision: 2,
-                    color: '#D4B87B',
-                });
+                this.ui.left
+                    .add(this.data, 'body_up', {
+                        rename: 'Body Position',
+                        type: 'slide',
+                        min: 0,
+                        max: 100,
+                        precision: 1,
+                        step: 1,
+                    })
+                    .onChange(this.updateValues);
+                this.ui.left
+                    .add(this.data, 'walk_speed', {
+                        rename: 'Walk Speed',
+                        type: 'slide',
+                        min: 0,
+                        max: 100,
+                        precision: 1,
+                        step: 1,
+                    })
+                    .onChange(this.updateValues);
+                this.ui.left
+                    .add(this.joystick, 'left_joystick', {
+                        type: 'joystick',
+                        rename: 'Move',
+                        multiplicator: 1,
+                        precision: 2,
+                        color: '#E2001C',
+                    })
+                    .onChange(this.updateJoystick);
 
                 this.ui.center.add('title', { name: 'Center' });
                 this.ui.center
@@ -174,67 +189,78 @@
                     .onChange(this.updateButton);
                 this.ui.center
                     .add(this.data, 'bot_on_off', {
-                        type: 'button',
-                        name: 'Bot on/off',
+                        rename: 'Bot OFF',
+                        onName: 'Bot ON',
                         value: 'bot_on_off',
+                        mode: 1,
                     })
                     .onChange(this.updateButton);
                 this.ui.center.add('empty', { h: 5 });
-                this.ui.center.add(this.data, 'toggle_lights', {
-                    name: 'Lights OFF',
-                    onName: 'Lights ON',
-                    value: false,
-                    mode: 1,
-                });
-                this.ui.center.add(this.data, 'toggle_laser', {
-                    name: 'Laser OFF',
-                    onName: 'Laser ON',
-                    value: false,
-                    mode: 1,
-                });
+                this.ui.center
+                    .add(this.data, 'toggle_lights', {
+                        rename: 'Lights OFF',
+                        onName: 'Lights ON',
+                        value: 'toggle_lights',
+                        mode: 1,
+                    })
+                    .onChange(this.updateButton);
+                this.ui.center
+                    .add(this.data, 'toggle_laser', {
+                        rename: 'Laser OFF',
+                        onName: 'Laser ON',
+                        value: 'toggle_laser',
+                        mode: 1,
+                    })
+                    .onChange(this.updateButton);
                 this.ui.center.add('empty', { h: 5 });
 
-                this.gimbal = this.ui.center.add('group', {
+                const gimbalGroup = this.ui.center.add('group', {
                     name: 'Gimbal Correction',
-                    color: '#D4B87B',
+                    color: '#E2001C',
                     h: 30,
                 });
-                this.gimbal.add(this.data.gimbal, 'x', {
-                    type: 'knob',
-                    name: 'X',
-                    w: 64,
-                    min: -100,
-                    max: 100,
-                    value: 0,
-                    precision: 0,
-                    step: 1,
-                    color: '#D4B87B',
-                    mode: 1,
-                });
-                this.gimbal.add(this.data.gimbal, 'y', {
-                    type: 'knob',
-                    name: 'Y',
-                    w: 64,
-                    min: -100,
-                    max: 100,
-                    value: 0,
-                    precision: 0,
-                    step: 1,
-                    color: '#D4B87B',
-                    mode: 1,
-                });
-                this.gimbal.add(this.data.gimbal, 'z', {
-                    type: 'knob',
-                    name: 'Z',
-                    w: 64,
-                    min: -100,
-                    max: 100,
-                    value: 0,
-                    precision: 0,
-                    step: 1,
-                    color: '#D4B87B',
-                    mode: 1,
-                });
+                gimbalGroup
+                    .add(this.gimbal, 'x', {
+                        type: 'knob',
+                        name: 'X',
+                        w: 64,
+                        min: -100,
+                        max: 100,
+                        value: 0,
+                        precision: 0,
+                        step: 1,
+                        color: '#E2001C',
+                        mode: 1,
+                    })
+                    .onChange(this.updateGimbal);
+                gimbalGroup
+                    .add(this.gimbal, 'y', {
+                        type: 'knob',
+                        name: 'Y',
+                        w: 64,
+                        min: -100,
+                        max: 100,
+                        value: 0,
+                        precision: 0,
+                        step: 1,
+                        color: '#E2001C',
+                        mode: 1,
+                    })
+                    .onChange(this.updateGimbal);
+                gimbalGroup
+                    .add(this.gimbal, 'z', {
+                        type: 'knob',
+                        name: 'Z',
+                        w: 64,
+                        min: -100,
+                        max: 100,
+                        value: 0,
+                        precision: 0,
+                        step: 1,
+                        color: '#E2001C',
+                        mode: 1,
+                    })
+                    .onChange(this.updateGimbal);
 
                 this.ui.right.add('title', { name: 'Right' });
                 this.ui.right
@@ -274,13 +300,15 @@
                         value: 'balance_mode',
                     })
                     .onChange(this.updateButton);
-                this.ui.right.add(this.data, 'right_joystick', {
-                    type: 'joystick',
-                    rename: 'Rotate',
-                    multiplicator: 1,
-                    precision: 2,
-                    color: '#D4B87B',
-                });
+                this.ui.right
+                    .add(this.joystick, 'right_joystick', {
+                        type: 'joystick',
+                        rename: 'Rotate',
+                        multiplicator: 1,
+                        precision: 2,
+                        color: '#E2001C',
+                    })
+                    .onChange(this.updateJoystick);
             },
         },
         created() {

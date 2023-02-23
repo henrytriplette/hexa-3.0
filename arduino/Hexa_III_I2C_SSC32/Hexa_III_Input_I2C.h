@@ -75,9 +75,11 @@
 // Note: The actual usages are from PS2 control
 //====================================================================
 // [Include files]
-#if ARDUINO > 99 #include <Arduino.h> // Arduino 1.0
+#if ARDUINO > 99
+#include <Arduino.h>  // Arduino 1.0
 
-#else #include < Wprogram.h> // Arduino 0022
+#else
+#include < Wprogram.h>  // Arduino 0022
 
 #endif
 #include <Wire.h>
@@ -99,34 +101,34 @@
 #define SINGLELEGMODE 3
 #define GPPLAYERMODE 4
 
-#define SERB_START 1  //   bit3 - Start Button test
-#define SERB_SELECT 2 //   bit0 - Select Button test
+#define SERB_START 1   //   bit3 - Start Button test
+#define SERB_SELECT 2  //   bit0 - Select Button test
 
-#define SERB_L3 3 //   bit1 - L3 Button test
-#define SERB_L1 4 //  bit2 - L1 Button test
-#define SERB_L2 5 //  bit0 - L2 Button test
+#define SERB_L3 3  //   bit1 - L3 Button test
+#define SERB_L1 4  //  bit2 - L1 Button test
+#define SERB_L2 5  //  bit0 - L2 Button test
 
-#define SERB_R3 6 //   bit2 - R3 Button test (Horn)
-#define SERB_R1 7 //  bit3 - R1 Button test
-#define SERB_R2 8 //  bit1 - R2 Button test
+#define SERB_R3 6  //   bit2 - R3 Button test (Horn)
+#define SERB_R1 7  //  bit3 - R1 Button test
+#define SERB_R2 8  //  bit1 - R2 Button test
 
-#define SERB_PAD_UP 9     //   bit4 - Up Button test
-#define SERB_PAD_DOWN 10  //   bit6 - Down Button test
-#define SERB_PAD_LEFT 11  //   bit7 - Left Button test
-#define SERB_PAD_RIGHT 12 //   bit5 - Right Button test
+#define SERB_PAD_UP 9      //   bit4 - Up Button test
+#define SERB_PAD_DOWN 10   //   bit6 - Down Button test
+#define SERB_PAD_LEFT 11   //   bit7 - Left Button test
+#define SERB_PAD_RIGHT 12  //   bit5 - Right Button test
 
-#define SERB_TRIANGLE 13 // bit4 - Triangle Button test
-#define SERB_CIRCLE 14   // bit5 - Circle Button test
-#define SERB_CROSS 15    // bit6 - Cross Button test
-#define SERB_SQUARE 16   // bit7 - Square Button test
+#define SERB_TRIANGLE 13  // bit4 - Triangle Button test
+#define SERB_CIRCLE 14    // bit5 - Circle Button test
+#define SERB_CROSS 15     // bit6 - Cross Button test
+#define SERB_SQUARE 16    // bit7 - Square Button test
 
-#define SER_LX 4 // DualShock(5) - Left Stick Left/right
-#define SER_LY 5 // DualShock(6) - Left Stick Up/Down
-#define SER_RX 6 // DualShock(3) - Right stick Left/right
-#define SER_RY 7 // DualShock(4) - Right Stick Up/Down
+#define SER_LX 4  // DualShock(5) - Left Stick Left/right
+#define SER_LY 5  // DualShock(6) - Left Stick Up/Down
+#define SER_RX 6  // DualShock(3) - Right stick Left/right
+#define SER_RY 7  // DualShock(4) - Right Stick Up/Down
 
-#define cTravelDeadZone 4 // The deadzone for the analog input from the remote
-#define MAXPS2ERRORCNT 5  // How many times through the loop will we go before shutting off robot?
+#define cTravelDeadZone 4  // The deadzone for the analog input from the remote
+#define MAXPS2ERRORCNT 5   // How many times through the loop will we go before shutting off robot?
 
 #ifndef MAX_BODY_Y
 #define MAX_BODY_Y 100
@@ -138,7 +140,7 @@
 // PS2X ps2x; // create PS2 Controller Class
 
 // Define an instance of the Input Controller...
-InputController g_InputController; // Our Input controller
+InputController g_InputController;  // Our Input controller
 
 static short g_BodyYOffset;
 static word g_wSerialErrorCnt;
@@ -148,8 +150,8 @@ static word g_wButtonsPrev;
 static bool DoubleHeightOn;
 static bool DoubleTravelOn;
 static bool WalkMethod;
-byte GPSeq;              // Number of the sequence
-short g_sGPSMController; // What GPSM value have we calculated. 0xff - Not used yet
+byte GPSeq;               // Number of the sequence
+short g_sGPSMController;  // What GPSM value have we calculated. 0xff - Not used yet
 
 // some external or forward function references.
 extern void SerialTurnRobotOff(void);
@@ -162,8 +164,7 @@ extern void receiveData(int);
 //==============================================================================
 
 // If both PS2 and XBee are defined then we will become secondary to the xbee
-void InputController::Init(void)
-{
+void InputController::Init(void) {
   int error;
 
   // error = ps2x.config_gamepad(57, 55, 56, 54);  // Setup gamepad (clock, command, attention, data) pins
@@ -183,14 +184,14 @@ void InputController::Init(void)
 
   g_BodyYOffset = 0;
   g_BodyYShift = 0;
-  g_wSerialErrorCnt = 0; // error count
+  g_wSerialErrorCnt = 0;  // error count
 
   ControlMode = WALKMODE;
   DoubleHeightOn = false;
   DoubleTravelOn = false;
   WalkMethod = false;
 
-  g_InControlState.SpeedControl = 100; // Sort of migrate stuff in from Devon.
+  g_InControlState.SpeedControl = 100;  // Sort of migrate stuff in from Devon.
 }
 
 //==============================================================================
@@ -198,8 +199,7 @@ void InputController::Init(void)
 // do a lot of bit-bang outputs and it would like us to minimize any interrupts
 // that we do while it is active...
 //==============================================================================
-void InputController::AllowControllerInterrupts(boolean fAllow)
-{
+void InputController::AllowControllerInterrupts(boolean fAllow) {
   // We don't need to do anything...
 }
 
@@ -210,17 +210,15 @@ void InputController::AllowControllerInterrupts(boolean fAllow)
 // process any commands.
 //==============================================================================
 #ifdef OPT_DYNAMIC_ADJUST_LEGS
-boolean g_fDynamicLegXZLength = false; // Has the user dynamically adjusted the Leg XZ init pos (width)
+boolean g_fDynamicLegXZLength = false;  // Has the user dynamically adjusted the Leg XZ init pos (width)
 #endif
 
-void InputController::ControlInput(void)
-{
+void InputController::ControlInput(void) {
   delay(100);
 }
 
-void receiveData(int howMany)
-{
-  byte abDualShock[8]; // we will to receive 7 bytes of data with the first byte being the checksum
+void receiveData(int howMany) {
+  byte abDualShock[8];  // we will to receive 7 bytes of data with the first byte being the checksum
 
   boolean fAdjustLegPositions = false;
   word wButtons;
@@ -229,22 +227,18 @@ void receiveData(int howMany)
   // ps2x.read_gamepad(); // read controller and set large motor to spin at 'vibrate' speed
 
   // Wish the library had a valid way to verify that the read_gamepad succeeded... Will hack for now
-  while (Wire.available())
-  {
-    for (int i = 0; i < howMany; i++)
-    {
-      abDualShock[i] = Wire.read(); // receive byte as a character
+  while (Wire.available()) {
+    for (int i = 0; i < howMany; i++) {
+      abDualShock[i] = Wire.read();  // receive byte as a character
       // SerSerial.println(abDualShock[i]);
       // SerSerial.print('\n');
     }
 
     // if ((ps2x.Analog(1) & 0xf0) == 0x70)
     // Lets check the checksum...to always be zero =)
-    if (abDualShock[0] == 0)
-    {
+    if (abDualShock[0] == 0) {
 #ifdef DBGSerial
-      if (g_fDebugOutput)
-      {
+      if (g_fDebugOutput) {
         // DBGSerial.print("PS2 Input: ");
         // DBGSerial.print(ps2x.ButtonDataByte(), HEX);
         // DBGSerial.print(":");
@@ -255,7 +249,7 @@ void receiveData(int howMany)
         // DBGSerial.print(abDualShock[SER_RX], DEC);
         // DBGSerial.print(" ");
         // DBGSerial.println(abDualShock[SER_RY], DEC);
-        
+
         // Serial Debug
         SerSerial.println(abDualShock[0]);
         SerSerial.print("\n\r");
@@ -279,7 +273,6 @@ void receiveData(int howMany)
         SerSerial.print("\n\r");
       }
 #endif
-#endif
 
 #ifdef OPT_DYNAMIC_ADJUST_LEGS
       boolean fAdjustLegPositions = false;
@@ -287,39 +280,33 @@ void receiveData(int howMany)
       short sLegInitAngleAdjust = 0;
 #endif
       // In an analog mode so should be OK...
-      g_wSerialErrorCnt = 0; // clear out error count...
+      g_wSerialErrorCnt = 0;  // clear out error count...
 
       // if (ps2x.ButtonPressed(PSB_START))
-      if (ButtonPressed(SERB_START))
-      { // OK lets press start button
+      if (ButtonPressed(SERB_START)) {  // OK lets press start button
         SerSerial.println("START");
-        if (g_InControlState.fRobotOn)
-        {
+        if (g_InControlState.fRobotOn) {
           SerialTurnRobotOff();
-        }
-        else
-        {
+        } else {
           // Turn on
           g_InControlState.fRobotOn = 1;
           fAdjustLegPositions = true;
         }
       }
 
-      if (g_InControlState.fRobotOn)
-      {
+      if (g_InControlState.fRobotOn) {
         // [SWITCH MODES]
 
         // Translate mode
         // if (ps2x.ButtonPressed(PSB_L1))
 
-        if (ButtonPressed(SERB_L1)) // L1 Button Test
+        if (ButtonPressed(SERB_L1))  // L1 Button Test
         {
           SerSerial.println("L1");
           MSound(1, 50, 2000);
           if (ControlMode != TRANSLATEMODE)
             ControlMode = TRANSLATEMODE;
-          else
-          {
+          else {
 #ifdef OPT_SINGLELEG
             if (g_InControlState.SelectedLeg == 255)
               ControlMode = WALKMODE;
@@ -331,14 +318,12 @@ void receiveData(int howMany)
 
         // Rotate mode
         // if (ps2x.ButtonPressed(PSB_L2))
-        if (ButtonPressed(SERB_L2))
-        { // L2 Button Test
+        if (ButtonPressed(SERB_L2)) {  // L2 Button Test
           SerSerial.println("L2");
           MSound(1, 50, 2000);
           if (ControlMode != ROTATEMODE)
             ControlMode = ROTATEMODE;
-          else
-          {
+          else {
 #ifdef OPT_SINGLELEG
             if (g_InControlState.SelectedLeg == 255)
               ControlMode = WALKMODE;
@@ -350,20 +335,15 @@ void receiveData(int howMany)
 
 // Single leg mode fNO
 #ifdef OPT_SINGLELEG
-        if (ButtonPressed(SERB_CIRCLE))
-        { // O - Circle Button Test
+        if (ButtonPressed(SERB_CIRCLE)) {  // O - Circle Button Test
           SerSerial.println("CIRCLE");
 
-          if (abs(g_InControlState.TravelLength.x) < cTravelDeadZone && abs(g_InControlState.TravelLength.z) < cTravelDeadZone && abs(g_InControlState.TravelLength.y * 2) < cTravelDeadZone)
-          {
-            if (ControlMode != SINGLELEGMODE)
-            {
+          if (abs(g_InControlState.TravelLength.x) < cTravelDeadZone && abs(g_InControlState.TravelLength.z) < cTravelDeadZone && abs(g_InControlState.TravelLength.y * 2) < cTravelDeadZone) {
+            if (ControlMode != SINGLELEGMODE) {
               ControlMode = SINGLELEGMODE;
-              if (g_InControlState.SelectedLeg == 255) // Select leg if none is selected
-                g_InControlState.SelectedLeg = cRF;    // Startleg
-            }
-            else
-            {
+              if (g_InControlState.SelectedLeg == 255)  // Select leg if none is selected
+                g_InControlState.SelectedLeg = cRF;     // Startleg
+            } else {
               ControlMode = WALKMODE;
               g_InControlState.SelectedLeg = 255;
             }
@@ -372,40 +352,32 @@ void receiveData(int howMany)
 #endif
 #ifdef OPT_GPPLAYER
         // GP Player Mode X
-        if (ButtonPressed(SERB_CROSS))
-        { // X - Cross Button Test
+        if (ButtonPressed(SERB_CROSS)) {  // X - Cross Button Test
           SerSerial.println("CROSS");
           MSound(1, 50, 2000);
-          if (ControlMode != GPPLAYERMODE)
-          {
+          if (ControlMode != GPPLAYERMODE) {
             ControlMode = GPPLAYERMODE;
             GPSeq = 0;
-          }
-          else
+          } else
             ControlMode = WALKMODE;
         }
-#endif // OPT_GPPLAYER
+#endif  // OPT_GPPLAYER
 
         //[Common functions]
         // Switch Balance mode on/off
-        if (ButtonPressed(SERB_SQUARE))
-        { // Square Button Test
+        if (ButtonPressed(SERB_SQUARE)) {  // Square Button Test
           SerSerial.println("SQUARE");
 
           g_InControlState.BalanceMode = !g_InControlState.BalanceMode;
-          if (g_InControlState.BalanceMode)
-          {
+          if (g_InControlState.BalanceMode) {
             MSound(1, 250, 1500);
-          }
-          else
-          {
+          } else {
             MSound(2, 100, 2000, 50, 4000);
           }
         }
 
         // Stand up, sit down
-        if (ButtonPressed(SERB_TRIANGLE))
-        { // Triangle - Button Test
+        if (ButtonPressed(SERB_TRIANGLE)) {  // Triangle - Button Test
           SerSerial.println("TRIANGLE");
 
           if (g_BodyYOffset > 0)
@@ -415,8 +387,7 @@ void receiveData(int howMany)
           fAdjustLegPositions = true;
         }
 
-        if (ButtonPressed(SERB_PAD_UP))
-        { // D-Up - Button Test
+        if (ButtonPressed(SERB_PAD_UP)) {  // D-Up - Button Test
           SerSerial.println("PAD_UP");
 
           g_BodyYOffset += 10;
@@ -427,35 +398,30 @@ void receiveData(int howMany)
             g_BodyYOffset = MAX_BODY_Y;
         }
 
-        if (ButtonPressed(SERB_PAD_DOWN) && g_BodyYOffset)
-        { // D-Down - Button Test
+        if (ButtonPressed(SERB_PAD_DOWN) && g_BodyYOffset) {  // D-Down - Button Test
           SerSerial.println("PAD_DOWN");
 
           if (g_BodyYOffset > 10)
             g_BodyYOffset -= 10;
           else
-            g_BodyYOffset = 0; // constrain don't go less than zero.
+            g_BodyYOffset = 0;  // constrain don't go less than zero.
 
           // And see if the legs should adjust...
           fAdjustLegPositions = true;
         }
 
-        if (ButtonPressed(SERB_PAD_RIGHT))
-        { // D-Right - Button Test
+        if (ButtonPressed(SERB_PAD_RIGHT)) {  // D-Right - Button Test
           SerSerial.println("PAD_RIGHT");
 
-          if (g_InControlState.SpeedControl > 0)
-          {
+          if (g_InControlState.SpeedControl > 0) {
             g_InControlState.SpeedControl = g_InControlState.SpeedControl - 50;
             MSound(1, 50, 2000);
           }
         }
 
-        if (ButtonPressed(SERB_PAD_LEFT))
-        { // D-Left - Button Test
+        if (ButtonPressed(SERB_PAD_LEFT)) {  // D-Left - Button Test
           SerSerial.println("PAD_LEFT");
-          if (g_InControlState.SpeedControl < 2000)
-          {
+          if (g_InControlState.SpeedControl < 2000) {
             g_InControlState.SpeedControl = g_InControlState.SpeedControl + 50;
             MSound(1, 50, 2000);
           }
@@ -467,13 +433,11 @@ void receiveData(int howMany)
         byte ly = abDualShock[SER_LY];
 #ifdef OPT_DYNAMIC_ADJUST_LEGS
 #ifdef OPT_SINGLELEG
-        if (ButtonPressed(SERB_L3))
-        { // L3 pressed, use this to modify leg positions.
+        if (ButtonPressed(SERB_L3)) {  // L3 pressed, use this to modify leg positions.
 #else
-        if (ButtonPressed(SERB_CIRCLE))
-        { // O - Circle Button Test
+        if (ButtonPressed(SERB_CIRCLE)) {  // O - Circle Button Test
 #endif
-          sLegInitXZAdjust = ((int)lx - 128) / 10; // play with this.
+          sLegInitXZAdjust = ((int)lx - 128) / 10;  // play with this.
           sLegInitAngleAdjust = ((int)ly - 128) / 8;
           lx = 0;
           ly = 0;
@@ -481,22 +445,15 @@ void receiveData(int howMany)
 #endif
 
         //[Walk functions]
-        if (ControlMode == WALKMODE)
-        {
+        if (ControlMode == WALKMODE) {
           // Switch gates
-          if (ButtonPressed(SERB_SELECT) // Select Button Test
-              &&
-              abs(g_InControlState.TravelLength.x) < cTravelDeadZone // No movement
-              &&
-              abs(g_InControlState.TravelLength.z) < cTravelDeadZone && abs(g_InControlState.TravelLength.y * 2) < cTravelDeadZone)
-          {
-            g_InControlState.GaitType = g_InControlState.GaitType + 1; // Go to the next gait...
-            if (g_InControlState.GaitType < NUM_GAITS)
-            { // Make sure we did not exceed number of gaits...
+          if (ButtonPressed(SERB_SELECT)                                 // Select Button Test
+              && abs(g_InControlState.TravelLength.x) < cTravelDeadZone  // No movement
+              && abs(g_InControlState.TravelLength.z) < cTravelDeadZone && abs(g_InControlState.TravelLength.y * 2) < cTravelDeadZone) {
+            g_InControlState.GaitType = g_InControlState.GaitType + 1;  // Go to the next gait...
+            if (g_InControlState.GaitType < NUM_GAITS) {                // Make sure we did not exceed number of gaits...
               MSound(1, 50, 2000);
-            }
-            else
-            {
+            } else {
               MSound(2, 50, 2000, 50, 2250);
               g_InControlState.GaitType = 0;
             }
@@ -504,8 +461,7 @@ void receiveData(int howMany)
           }
 
           // Double leg lift height
-          if (ButtonPressed(SERB_R1))
-          { // R1 Button Test
+          if (ButtonPressed(SERB_R1)) {  // R1 Button Test
             SerSerial.println("R1");
             MSound(1, 50, 2000);
             DoubleHeightOn = !DoubleHeightOn;
@@ -516,44 +472,39 @@ void receiveData(int howMany)
           }
 
           // Double Travel Length
-          if (ButtonPressed(SERB_R2))
-          { // R2 Button Test
+          if (ButtonPressed(SERB_R2)) {  // R2 Button Test
             SerSerial.println("R2");
             MSound(1, 50, 2000);
             DoubleTravelOn = !DoubleTravelOn;
           }
 
           // Switch between Walk method 1 && Walk method 2
-          if (ButtonPressed(SERB_R3))
-          { // R3 Button Test
+          if (ButtonPressed(SERB_R3)) {  // R3 Button Test
             SerSerial.println("R3");
             MSound(1, 50, 2000);
             WalkMethod = !WalkMethod;
           }
 
           // Walking
-          if (WalkMethod)                                                  //(Walk Methode)
-            g_InControlState.TravelLength.z = (abDualShock[SER_RY] - 128); // Right Stick Up/Down
+          if (WalkMethod)                                                   //(Walk Methode)
+            g_InControlState.TravelLength.z = (abDualShock[SER_RY] - 128);  // Right Stick Up/Down
 
-          else
-          {
+          else {
             g_InControlState.TravelLength.x = -(lx - 128);
             g_InControlState.TravelLength.z = (ly - 128);
           }
 
-          if (!DoubleTravelOn)
-          { //(Double travel length)
+          if (!DoubleTravelOn) {  //(Double travel length)
             g_InControlState.TravelLength.x = g_InControlState.TravelLength.x / 2;
             g_InControlState.TravelLength.z = g_InControlState.TravelLength.z / 2;
           }
 
-          g_InControlState.TravelLength.y = -(abDualShock[SER_RX] - 128) / 4; // Right Stick Left/Right
+          g_InControlState.TravelLength.y = -(abDualShock[SER_RX] - 128) / 4;  // Right Stick Left/Right
         }
 
         //[Translate functions]
         g_BodyYShift = 0;
-        if (ControlMode == TRANSLATEMODE)
-        {
+        if (ControlMode == TRANSLATEMODE) {
           g_InControlState.BodyPos.x = (lx - 128) / 2;
           g_InControlState.BodyPos.z = -(ly - 128) / 3;
           g_InControlState.BodyRot1.y = (abDualShock[SER_RX] - 128) * 2;
@@ -561,8 +512,7 @@ void receiveData(int howMany)
         }
 
         //[Rotate functions]
-        if (ControlMode == ROTATEMODE)
-        {
+        if (ControlMode == ROTATEMODE) {
           g_InControlState.BodyRot1.x = (ly - 128);
           g_InControlState.BodyRot1.y = (abDualShock[SER_RX] - 128) * 2;
           g_InControlState.BodyRot1.z = (lx - 128);
@@ -571,11 +521,9 @@ void receiveData(int howMany)
 
 //[Single leg functions]
 #ifdef OPT_SINGLELEG
-        if (ControlMode == SINGLELEGMODE)
-        {
+        if (ControlMode == SINGLELEGMODE) {
           // Switch leg for single leg control
-          if (ButtonPressed(SERB_SELECT))
-          { // Select Button Test
+          if (ButtonPressed(SERB_SELECT)) {  // Select Button Test
             SerSerial.println("SELECT");
             MSound(1, 50, 2000);
             if (g_InControlState.SelectedLeg < (CNT_LEGS - 1))
@@ -584,13 +532,12 @@ void receiveData(int howMany)
               g_InControlState.SelectedLeg = 0;
           }
 
-          g_InControlState.SLLeg.x = (lx - 128) / 2;                   // Left Stick Right/Left
-          g_InControlState.SLLeg.y = (abDualShock[SER_RY] - 128) / 10; // Right Stick Up/Down
-          g_InControlState.SLLeg.z = (ly - 128) / 2;                   // Left Stick Up/Down
+          g_InControlState.SLLeg.x = (lx - 128) / 2;                    // Left Stick Right/Left
+          g_InControlState.SLLeg.y = (abDualShock[SER_RY] - 128) / 10;  // Right Stick Up/Down
+          g_InControlState.SLLeg.z = (ly - 128) / 2;                    // Left Stick Up/Down
 
           // Hold single leg in place
-          if (ButtonPressed(SERB_R2))
-          { // R2 Button Test
+          if (ButtonPressed(SERB_R2)) {  // R2 Button Test
             SerSerial.println("R2");
             MSound(1, 50, 2000);
             g_InControlState.fSLHold = !g_InControlState.fSLHold;
@@ -599,20 +546,16 @@ void receiveData(int howMany)
 #endif
 #ifdef OPT_GPPLAYER
         //[GPPlayer functions]
-        if (ControlMode == GPPLAYERMODE)
-        {
+        if (ControlMode == GPPLAYERMODE) {
 
           // Lets try some speed control... Map all values if we have mapped some before
           // or start mapping if we exceed some minimum delta from center
           // Have to keep reminding myself that commander library already subtracted 128...
-          if (g_ServoDriver.FIsGPSeqActive())
-          {
-            if ((g_sGPSMController != 32767) || (abDualShock[SER_RY] > (128 + 16)) || (abDualShock[SER_RY] < (128 - 16)))
-            {
+          if (g_ServoDriver.FIsGPSeqActive()) {
+            if ((g_sGPSMController != 32767) || (abDualShock[SER_RY] > (128 + 16)) || (abDualShock[SER_RY] < (128 - 16))) {
               // We are in speed modify mode...
               short sNewGPSM = map(abDualShock[SER_RY], 0, 255, -200, 200);
-              if (sNewGPSM != g_sGPSMController)
-              {
+              if (sNewGPSM != g_sGPSMController) {
                 g_sGPSMController = sNewGPSM;
                 g_ServoDriver.GPSetSpeedMultiplyer(g_sGPSMController);
               }
@@ -620,36 +563,28 @@ void receiveData(int howMany)
           }
 
           // Switch between sequences
-          if (ButtonPressed(SERB_SELECT))
-          { // Select Button Test
-            if (!g_ServoDriver.FIsGPSeqActive())
-            {
-              if (GPSeq < 5)
-              { // Max sequence
+          if (ButtonPressed(SERB_SELECT)) {  // Select Button Test
+            if (!g_ServoDriver.FIsGPSeqActive()) {
+              if (GPSeq < 5) {  // Max sequence
                 MSound(1, 50, 1500);
                 GPSeq = GPSeq + 1;
-              }
-              else
-              {
+              } else {
                 MSound(2, 50, 2000, 50, 2250);
                 GPSeq = 0;
               }
             }
           }
           // Start Sequence
-          if (ButtonPressed(SERB_R2)) // R2 Button Test
-            if (!g_ServoDriver.FIsGPSeqActive())
-            {
+          if (ButtonPressed(SERB_R2))  // R2 Button Test
+            if (!g_ServoDriver.FIsGPSeqActive()) {
               g_ServoDriver.GPStartSeq(GPSeq);
-              g_sGPSMController = 32767; // Say that we are not in Speed modify mode yet... valid ranges are 50-200 (both postive and negative...
-            }
-            else
-            {
-              g_ServoDriver.GPStartSeq(0xff); // tell the GP system to abort if possible...
+              g_sGPSMController = 32767;  // Say that we are not in Speed modify mode yet... valid ranges are 50-200 (both postive and negative...
+            } else {
+              g_ServoDriver.GPStartSeq(0xff);  // tell the GP system to abort if possible...
               MSound(2, 50, 2000, 50, 2000);
             }
         }
-#endif // OPT_GPPLAYER
+#endif  // OPT_GPPLAYER
 
         // Calculate walking time delay
         g_InControlState.InputTimeDelay = 128 - max(max(abs(lx - 128), abs(ly - 128)), abs(abDualShock[SER_RX] - 128));
@@ -659,16 +594,14 @@ void receiveData(int howMany)
       g_InControlState.BodyPos.y = min(max(g_BodyYOffset + g_BodyYShift, 0), MAX_BODY_Y);
 
 #ifdef OPT_DYNAMIC_ADJUST_LEGS
-      if (sLegInitXZAdjust || sLegInitAngleAdjust)
-      {
+      if (sLegInitXZAdjust || sLegInitAngleAdjust) {
         // User asked for manual leg adjustment - only do when we have finished any previous adjustment
 
-        if (!g_InControlState.ForceGaitStepCnt)
-        {
+        if (!g_InControlState.ForceGaitStepCnt) {
           if (sLegInitXZAdjust)
             g_fDynamicLegXZLength = true;
 
-          sLegInitXZAdjust += GetLegsXZLength(); // Add on current length to our adjustment...
+          sLegInitXZAdjust += GetLegsXZLength();  // Add on current length to our adjustment...
           // Handle maybe change angles...
           if (sLegInitAngleAdjust)
             RotateLegInitAngles(sLegInitAngleAdjust);
@@ -679,13 +612,11 @@ void receiveData(int howMany)
 #endif
 
       if (fAdjustLegPositions)
-        AdjustLegPositionsToBodyHeight(); // Put main workings into main program file
-    }
-    else
-    {
+        AdjustLegPositionsToBodyHeight();  // Put main workings into main program file
+    } else {
       // We may have lost the PS2... See what we can do to recover...
       if (g_wSerialErrorCnt < MAXPS2ERRORCNT)
-        g_wSerialErrorCnt++; // Increment the error count and if to many errors, turn off the robot.
+        g_wSerialErrorCnt++;  // Increment the error count and if to many errors, turn off the robot.
       else if (g_InControlState.fRobotOn)
         SerialTurnRobotOff();
       // ps2x.reconfig_gamepad();
@@ -696,8 +627,7 @@ void receiveData(int howMany)
 //==============================================================================
 // SerialTurnRobotOff - code used couple of places so save a little room...
 //==============================================================================
-void SerialTurnRobotOff(void)
-{
+void SerialTurnRobotOff(void) {
   // Turn off
   g_InControlState.BodyPos.x = 0;
   g_InControlState.BodyPos.y = 0;
@@ -714,5 +644,5 @@ void SerialTurnRobotOff(void)
   g_InControlState.SelectedLeg = 255;
 #endif
   g_InControlState.fRobotOn = 0;
-  AdjustLegPositionsToBodyHeight(); // Put main workings into main program file
+  AdjustLegPositionsToBodyHeight();  // Put main workings into main program file
 }

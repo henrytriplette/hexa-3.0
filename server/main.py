@@ -5,10 +5,9 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 
 # Custom modules
-# from modules import gimbal
-# from modules import toggle
-# from modules import hexapod
-# from modules import joystick
+from modules import gimbal
+from modules import toggle
+from modules import controls
 from modules import utility
 
 # Read Configuration
@@ -26,26 +25,33 @@ CORS(app)
 # enable SocketIO
 socketio = SocketIO(app, cors_allowed_origins="*")
 
+
 # 404
 @app.errorhandler(404)
 def not_found(e):
     return "Not Found", 404
 
+
 # On connection
 @socketio.event
 def connection(message):
-    print('Client connected')
-    socketio.emit('status_log', {'data': 'Client connected'})
+    print("Client connected")
+    socketio.emit("status_log", {"data": "Client connected"})
+
 
 @socketio.event
 def connect_error(data):
     print("The connection failed!")
-    socketio.emit('error', {'data': 'The connection failed'})
+    socketio.emit("error", {"data": "The connection failed"})
+
 
 @socketio.event
 def disconnect():
     print("I'm disconnected!")
-    socketio.emit('error', {'data': 'The connection failed'})
+    socketio.emit("error", {"data": "The connection failed"})
+
+# Control
+socketio.on_event("setControlsSocket", controls.setControlsSocket)
 
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000, debug=config["system"]["debug"])

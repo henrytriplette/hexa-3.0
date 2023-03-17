@@ -32,12 +32,10 @@
         },
         methods: {
             updateButton(key) {
-                this.controlStore.buttons[key] = !this.controlStore.buttons[key];
-                console.log(key, this.controlStore.buttons[key]);
+                this.controlStore.updateButton(key)
             },
             updateJoystick(value) {
-                this.controlStore.joystick.right_joystick = value;
-                console.log(this.controlStore.joystick.right_joystick);
+                this.controlStore.updateJoystick('right_joystick', value);
             },
             generateUI() {
                 this.maxW = Math.floor(window.innerWidth / 3 - 1);
@@ -82,6 +80,13 @@
                     .add('button', {
                         name: 'Balance mode',
                         value: 'balance_mode',
+                    })
+                    .onChange(this.updateButton);
+
+                this.ui
+                    .add('button', {
+                        name: 'Body 35mm mode',
+                        value: 'body_35mm',
                     })
                     .onChange(this.updateButton);
 

@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-      "start": "yarn dev",
-      "dev": "vite --config config/vite.config.dev.js",
-      "build": "vite build",
-      "preview": "vite preview",
-      "flush": "rm -r node_modules/.vite/deps"
+    "start": "yarn dev",
+    "dev": "vite --config config/vite.config.dev.js",
+    "build": "vite build",
+    "preview": "vite preview",
+    "flush": "rm -r node_modules/.vite/deps"
   },
   "dependencies": {
     "@vueuse/head": "^1.0.26",
@@ -16,6 +16,7 @@
     "pinia": "^2.0.32",
     "sass": "^1.58.3",
     "socket.io-client": "^4.6.0",
+    "throttle-debounce": "^5.0.0",
     "uikit": "^3.16.1",
     "uil": "^4.2.8",
     "vue": "^3.2.45",

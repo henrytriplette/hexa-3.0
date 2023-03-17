@@ -25,33 +25,38 @@ CORS(app)
 # enable SocketIO
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-
 # 404
 @app.errorhandler(404)
 def not_found(e):
     return "Not Found", 404
 
-
 # On connection
 @socketio.event
-def connection(message):
+def connection(data):
     print("Client connected")
-    socketio.emit("status_log", {"data": "Client connected"})
-
+    # socketio.emit("status_log", {"data": "Client connected"})
 
 @socketio.event
 def connect_error(data):
     print("The connection failed!")
-    socketio.emit("error", {"data": "The connection failed"})
+    # socketio.emit("error", {"data": "The connection failed"})
 
 
 @socketio.event
 def disconnect():
     print("I'm disconnected!")
-    socketio.emit("error", {"data": "The connection failed"})
+    # socketio.emit("error", {"data": "The connection failed"})
 
 # Control
-socketio.on_event("setControlsSocket", controls.setControlsSocket)
+socketio.on_event('setControlsJoystick', controls.setControlsJoystick, namespace='/')
+socketio.on_event('setControlsButton', controls.setControlsButton, namespace='/')
+
+# Toggle
+socketio.on_event('setToggleButton', toggle.setToggleButton, namespace='/')
+
+# Gimbal
+# socketio.on_event('setGimbalPosition', gimbal.setGimbalPosition, namespace='/gimbal')
+# socketio.on_event('setGimbalReset', gimbal.setGimbalReset, namespace='/gimbal')
 
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000, debug=config["system"]["debug"])

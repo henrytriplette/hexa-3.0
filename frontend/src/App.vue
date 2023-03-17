@@ -38,7 +38,6 @@
             });
         },
         mounted() {
-            this.$soketio.emit('connection', { data: 'Client connected!' });
         }
     };
 </script>

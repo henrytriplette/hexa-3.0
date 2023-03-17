@@ -32,29 +32,25 @@
         },
         methods: {
             updateButton(key) {
-                this.controlStore.buttons[key] = !this.controlStore.buttons[key];
-                console.log(key, this.controlStore.buttons[key]);
+                this.controlStore.updateButton(key);
             },
             updateToggleBot(value) {
-                this.controlStore.buttons.bot_on_off = value;
-                console.log(this.controlStore.buttons.bot_on_off);
+                this.controlStore.updateToggle('bot_on_off', value);
             },
             updateToggleLights(value) {
-                this.controlStore.buttons.toggle_lights = value;
-                console.log(this.controlStore.buttons.toggle_lights);
+                this.controlStore.updateToggle('toggle_lights', value);
             },
             updateToggleLaser(value) {
-                this.controlStore.buttons.toggle_laser = value;
-                console.log(this.controlStore.buttons.toggle_laser);
+                this.controlStore.updateToggle('toggle_laser', value);
             },
             updateGimbalX(value) {
-                this.controlStore.gimbal.x = value;
+                this.controlStore.updateGimbal('x', value)
             },
             updateGimbalY(value) {
-                this.controlStore.gimbal.y = value;
+                this.controlStore.updateGimbal('y', value)
             },
             updateGimbalZ(value) {
-                this.controlStore.gimbal.z = value;
+                this.controlStore.updateGimbal('z', value)
             },
             generateUI() {
                 this.maxW = Math.floor(window.innerWidth / 3 - 1);

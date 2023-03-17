@@ -32,12 +32,10 @@
         },
         methods: {
             updateButton(key) {
-                this.controlStore.buttons[key] = !this.controlStore.buttons[key];
-                console.log(key, this.controlStore.buttons[key]);
+                this.controlStore.updateButton(key);
             },
             updateJoystick(value) {
-                this.controlStore.joystick.left_joystick = value;
-                console.log(this.controlStore.joystick.left_joystick );
+                this.controlStore.updateJoystick('left_joystick', value);
             },
             generateUI() {
                 this.maxW = Math.floor(window.innerWidth / 3 - 1);

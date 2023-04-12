@@ -28,8 +28,10 @@ export const useControlStore = defineStore('ControlStore', {
                 body_35mm: false,
             },
             toggle: {
-                toggle_lights: false,
-                toggle_laser: false,
+                toggle_bec_sx: false,
+                toggle_bec_dx: false,
+                toggle_light: false,
+                toggle_gimbal: false,
             },
             joystick: {
                 left_joystick: {
@@ -45,6 +47,7 @@ export const useControlStore = defineStore('ControlStore', {
                 x: 0,
                 y: 0,
                 z: 0,
+                reset_gimbal: false,
             },
         };
     },
@@ -62,11 +65,15 @@ export const useControlStore = defineStore('ControlStore', {
         },
         updateToggle(key, value) {
             this.toggle[key] = value;
-            if (TOGGLE[key]) socket.updateSocketToggle( TOGGLE[key], value );
+            if (TOGGLE[key]) socket.updateSocketToggle(TOGGLE[key], value);
         },
         updateGimbal(axis, value) {
             this.gimbal[axis] = value;
             socket.updateSocketGimbal(this.gimbal);
+        },
+        updateGimbalReset(key) {
+            this.gimbal.reset_gimbal = !this.gimbal.reset_gimbal;
+            socket.updateSocketGimbalReset(this.gimbal.reset_gimbal);
         },
     },
 

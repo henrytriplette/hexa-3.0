@@ -37,20 +37,29 @@
             updateToggleBot(value) {
                 this.controlStore.updateToggle('bot_on_off', value);
             },
-            updateToggleLights(value) {
-                this.controlStore.updateToggle('toggle_lights', value);
+            updateToggleBecSx(value) {
+                this.controlStore.updateToggle('toggle_bec_sx', value);
             },
-            updateToggleLaser(value) {
-                this.controlStore.updateToggle('toggle_laser', value);
+            updateTogglBecDx(value) {
+                this.controlStore.updateToggle('toggle_bec_dx', value);
+            },
+            updateToggleLight(value) {
+                this.controlStore.updateToggle('toggle_light', value);
+            },
+            updateToggleGimbal(value) {
+                this.controlStore.updateToggle('toggle_gimbal', value);
             },
             updateGimbalX(value) {
-                this.controlStore.updateGimbal('x', value)
+                this.controlStore.updateGimbal('x', value);
             },
             updateGimbalY(value) {
-                this.controlStore.updateGimbal('y', value)
+                this.controlStore.updateGimbal('y', value);
             },
             updateGimbalZ(value) {
-                this.controlStore.updateGimbal('z', value)
+                this.controlStore.updateGimbal('z', value);
+            },
+            updateGimbalReset(value) {
+                this.controlStore.updateGimbalReset(value);
             },
             generateUI() {
                 this.maxW = Math.floor(window.innerWidth / 3 - 1);
@@ -85,6 +94,23 @@
                     })
                     .onChange(this.updateToggleBot);
                 this.ui.add('empty', { h: 5 });
+
+                this.ui
+                    .add('bool', {
+                        name: 'Bec SX OFF',
+                        onName: 'Bec SX ON',
+                        mode: 1,
+                        value: false,
+                    })
+                    .onChange(this.updateToggleBecSx);
+                this.ui
+                    .add('bool', {
+                        name: 'Bec DX OFF',
+                        onName: 'Bec DX ON',
+                        mode: 1,
+                        value: false,
+                    })
+                    .onChange(this.updateTogglBecDx);
                 this.ui
                     .add('bool', {
                         name: 'Lights OFF',
@@ -92,17 +118,24 @@
                         mode: 1,
                         value: false,
                     })
-                    .onChange(this.updateToggleLights);
+                    .onChange(this.updateToggleLight);
                 this.ui
                     .add('bool', {
-                        name: 'Laser OFF',
-                        onName: 'Laser ON',
+                        name: 'Gimbal OFF',
+                        onName: 'Gimbal ON',
                         mode: 1,
                         value: false,
                     })
-                    .onChange(this.updateToggleLaser);
+                    .onChange(this.updateToggleGimbal);
 
                 this.ui.add('empty', { h: 5 });
+
+                this.ui
+                    .add('button', {
+                        name: 'Reset Gimbal',
+                        value: 'reset_gimbal',
+                    })
+                    .onChange(this.updateGimbalReset);
 
                 const gimbalGroup = this.ui.add('group', {
                     name: 'Gimbal Correction',

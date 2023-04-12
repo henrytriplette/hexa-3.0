@@ -55,8 +55,8 @@ socketio.on_event('setControlsButton', controls.setControlsButton, namespace='/'
 socketio.on_event('setToggleButton', toggle.setToggleButton, namespace='/')
 
 # Gimbal
-# socketio.on_event('setGimbalPosition', gimbal.setGimbalPosition, namespace='/gimbal')
-# socketio.on_event('setGimbalReset', gimbal.setGimbalReset, namespace='/gimbal')
+socketio.on_event('setGimbalPosition', gimbal.setGimbalPosition, namespace='/')
+socketio.on_event('setGimbalReset', gimbal.setGimbalReset, namespace='/')
 
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000, debug=config["system"]["debug"])

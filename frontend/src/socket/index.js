@@ -35,3 +35,7 @@ socket.updateSocketToggle = throttle(250, (key, data) => {
 socket.updateSocketGimbal = throttle(250, data => {
     socket.emit('setGimbalPosition', data);
 });
+
+socket.updateSocketGimbalReset = throttle(250, data => {
+    socket.emit('setGimbalReset', data);
+});

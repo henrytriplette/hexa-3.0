@@ -6,7 +6,7 @@ int centerValue = 90;   // Almost all standard servos have positions from 0 to 1
                         // 90 the center point.
 
 void setup() {
-  servo.attach(2);  // Attaches the servo on pin 2 to the servo object
+  servo.attach(3);  // Attaches the servo on pin 2 to the servo object
 }
 
 void loop() {

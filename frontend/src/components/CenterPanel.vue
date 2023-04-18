@@ -13,6 +13,7 @@
 <script>
     // UTL.gui
     import * as UIL from 'uil';
+    import { GIMBAL } from '@/constants/Gimbal';
 
     // Store
     import { storeToRefs } from 'pinia';
@@ -146,8 +147,8 @@
                     .add('knob', {
                         name: 'X',
                         w: 64,
-                        min: -100,
-                        max: 100,
+                        min: GIMBAL.minX,
+                        max: GIMBAL.maxX,
                         value: 0,
                         precision: 0,
                         step: 1,
@@ -160,8 +161,8 @@
                         type: 'knob',
                         name: 'Y',
                         w: 64,
-                        min: -100,
-                        max: 100,
+                        min: GIMBAL.minY,
+                        max: GIMBAL.maxY,
                         value: 0,
                         precision: 0,
                         step: 1,
@@ -174,8 +175,8 @@
                         type: 'knob',
                         name: 'Z',
                         w: 64,
-                        min: -100,
-                        max: 100,
+                        min: GIMBAL.minZ,
+                        max: GIMBAL.maxZ,
                         value: 0,
                         precision: 0,
                         step: 1,

@@ -6,6 +6,7 @@ import { convertRange } from '@/utils/Utility';
 import { JOYSTICK } from '@/constants/Joystick';
 import { BUTTONS } from '@/constants/Buttons';
 import { TOGGLE } from '@/constants/Toggle';
+import { GIMBAL } from '@/constants/Gimbal';
 
 export const useControlStore = defineStore('ControlStore', {
     state: () => {
@@ -73,7 +74,7 @@ export const useControlStore = defineStore('ControlStore', {
         },
         updateGimbalReset(key) {
             this.gimbal.reset_gimbal = !this.gimbal.reset_gimbal;
-            socket.updateSocketGimbalReset(this.gimbal.reset_gimbal);
+            socket.updateSocketGimbalReset(GIMBAL.gimbal_reset, this.gimbal.reset_gimbal);
         },
     },
 

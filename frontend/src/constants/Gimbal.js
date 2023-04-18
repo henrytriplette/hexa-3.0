@@ -5,4 +5,5 @@ export const GIMBAL = {
     maxY: 40,
     minZ: -40,
     maxZ: 40,
+    gimbal_reset: 'PWM_GIMBAL_RESET'
 };

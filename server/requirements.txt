@@ -1,3 +1,5 @@
 Flask==2.2.3
 Flask-Cors==3.0.10
+Flask-SocketIO==5.3.3
 smbus2==0.4.2
+gpiozero==1.6.2

@@ -2,26 +2,16 @@ from classes.rpi_RELAYBOARD import RELAYBOARD
 
 import configparser
 
-SERB_TOGGLE_BEC_SX = False
-SERB_TOGGLE_BEC_DX = False
-SERB_TOGGLE_LIGHT = False
-SERB_TOGGLE_GIMBAL = False
+# Read Configuration
+config = configparser.ConfigParser()
+config.read("config.ini")
 
-try:
-
-    # Read Configuration
-    config = configparser.ConfigParser()
-    config.read("config.ini")
-
-    relays = {
-        SERB_TOGGLE_BEC_SX: RELAYBOARD(config.SERB_TOGGLE_BEC_SX),
-        SERB_TOGGLE_BEC_DX: RELAYBOARD(config.SERB_TOGGLE_BEC_DX),
-        SERB_TOGGLE_LIGHT: RELAYBOARD(config.SERB_TOGGLE_LIGHT),
-        SERB_TOGGLE_GIMBAL: RELAYBOARD(config.SERB_TOGGLE_GIMBAL)
-    }
-
-except:
-    print("Relay board doesn't respond")
+relays = {
+    'SERB_TOGGLE_BEC_SX': RELAYBOARD(config['gpio']['SERB_TOGGLE_BEC_SX']),
+    'SERB_TOGGLE_BEC_DX': RELAYBOARD(config['gpio']['SERB_TOGGLE_BEC_DX']),
+    'SERB_TOGGLE_LIGHT': RELAYBOARD(config['gpio']['SERB_TOGGLE_LIGHT']),
+    'SERB_TOGGLE_GIMBAL': RELAYBOARD(config['gpio']['SERB_TOGGLE_GIMBAL'])
+}
 
 def setToggleButton(button_data):
     if (relays[button_data['key']]):

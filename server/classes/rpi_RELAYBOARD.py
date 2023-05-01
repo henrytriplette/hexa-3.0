@@ -13,7 +13,7 @@ import time
 from gpiozero import OutputDevice
 
 class RELAYBOARD:
-    def __init__(self, pin, active_high=True, initial_value=True):
+    def __init__(self, pin, active_high=False, initial_value=False):
         self.relay = OutputDevice(pin, active_high=active_high, initial_value=initial_value)
         self.state = self.get_state()
 

@@ -9,7 +9,7 @@ import time
 
 class BOTBOARDUINO:
     def __init__(self, i2c_bus=1, addr=0x40, register=0):
-        self.bus = SMBus(i2c_bus);
+        self.bus = SMBus(i2c_bus)
         self.addr = addr
         self.addr = register
 

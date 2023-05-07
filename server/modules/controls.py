@@ -1,7 +1,16 @@
-# from classes.rpi_BOTBOARDUINO import BOTBOARDUINO
+from classes.rpi_BOTBOARDUINO import BOTBOARDUINO
 from modules import utility
 
+import configparser
+
+# Read Configuration
+config = configparser.ConfigParser()
+config.read("config.ini")
+
 data = [0, 0, 0, 128, 128, 128, 128]
+address = config['arduino']['I2C_arduino_i2cAddress']
+
+bus = BOTBOARDUINO(config['arduino']['I2C_bus'], config['arduino']['I2C_arduino_i2cAddress'])
 
 def setControlsJoystick(joy_data):
     joy_data = utility.sanitizeJson(joy_data)
@@ -23,7 +32,7 @@ def setControlsJoystick(joy_data):
     data[5] = int(round(data[5]))
     data[6] = int(round(data[6]))
 
-    print(data)
+    bus.send(data, address)
 
 def setControlsButton(button_data):
     # button_data = utility.sanitizeJson(button_data)
@@ -39,4 +48,4 @@ def setControlsButton(button_data):
         128
     ]
 
-    print(data)
+    bus.send(data, address)

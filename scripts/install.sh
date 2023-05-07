@@ -4,6 +4,7 @@ sudo apt -yq upgrade
 sudo apt install -y python3-picamera2 --no-install-recommends
 sudo apt install -y git
 sudo apt install -y python3-pip
+sudo apt install -y i2c-tools
 # Install Node
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt update

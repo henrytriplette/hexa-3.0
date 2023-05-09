@@ -2,7 +2,6 @@
     <div id="hera">
         <Header />
         <RouterView />
-        <Controller />
         <Footer />
     </div>
 </template>
@@ -18,13 +17,11 @@
 
     import Header from '@/components/Header.vue';
     import Footer from '@/components/Footer.vue';
-    import Controller from '@/components/Controller.vue';
 
     export default {
         components: {
             Header,
             Footer,
-            Controller,
         },
         setup() {
             useHead({

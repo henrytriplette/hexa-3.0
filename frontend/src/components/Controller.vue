@@ -1,5 +1,5 @@
 <template>
-    <div ref="status" class="controller-container">
+    <div ref="status" class="controller-container uk-flex uk-flex-center uk-flex-middle">
         <div>{{ status }}</div>
     </div>
 </template>

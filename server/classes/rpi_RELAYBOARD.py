@@ -10,12 +10,15 @@ import time
 # https://gpiozero.readthedocs.io/en/stable/installing.html
 # Pin numbering as follows:
 # https://gpiozero.readthedocs.io/en/stable/recipes.html#pin-numbering
-from gpiozero import OutputDevice
+from gpiozero import OutputDevice, GPIOZeroError
 
 class RELAYBOARD:
     def __init__(self, pin, active_high=False, initial_value=False):
-        self.relay = OutputDevice(pin, active_high=active_high, initial_value=initial_value)
-        self.state = self.get_state()
+        try:
+            self.relay = OutputDevice(pin, active_high=active_high, initial_value=initial_value)
+            self.state = self.get_state()
+        except GPIOZeroError:
+            print('A GPIO Zero error occurred')
 
     def activate(self):
         self.relay.on()

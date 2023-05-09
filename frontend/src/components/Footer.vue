@@ -1,22 +1,21 @@
 <template>
-    <div class="footer">
-        <p>Connection State: {{ connected }}</p>
+    <div class="footer uk-grid uk-child-width-1-2 uk-child-width-expand@m">
+        <Connection />
+        <Controller />
     </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <script>
-import { state } from "@/socket";
+    import Connection from '@/components/Connection.vue';
+    import Controller from '@/components/Controller.vue';
 
-export default {
-  name: "Footer",
-
-  computed: {
-    connected() {
-      return state.connected;
-    }
-  }
-}
+    export default {
+        name: 'Footer',
+        components: {
+            Connection,
+            Controller,
+        },
+    };
 </script>

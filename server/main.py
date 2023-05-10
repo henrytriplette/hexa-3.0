@@ -1,6 +1,6 @@
 import configparser
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Response
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 
@@ -8,6 +8,7 @@ from flask_socketio import SocketIO, emit
 from modules import gimbal
 from modules import toggle
 from modules import controls
+from modules import cameras
 from modules import utility
 
 # Read Configuration
@@ -57,6 +58,12 @@ socketio.on_event('setToggleButton', toggle.setToggleButton, namespace='/')
 # Gimbal
 socketio.on_event('setGimbalPosition', gimbal.setGimbalPosition, namespace='/')
 socketio.on_event('setGimbalReset', gimbal.setGimbalReset, namespace='/')
+
+# Camera
+@app.route('/video_feed', methods=['GET'])
+def video_feed():
+    return Response(cameras.genFrames(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000, debug=config["system"]["debug"])

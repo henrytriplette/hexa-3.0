@@ -10,7 +10,7 @@ config.read("config.ini")
 data = [0, 0, 0, 128, 128, 128, 128]
 address = config['arduino']['I2C_arduino_i2cAddress']
 
-bus = BOTBOARDUINO(config['arduino']['I2C_bus'], config['arduino']['I2C_arduino_i2cAddress'])
+bba = BOTBOARDUINO(address)
 
 def setControlsJoystick(joy_data):
     joy_data = utility.sanitizeJson(joy_data)
@@ -32,7 +32,7 @@ def setControlsJoystick(joy_data):
     data[5] = int(round(data[5]))
     data[6] = int(round(data[6]))
 
-    bus.send(data, address)
+    bba.send(data)
 
 def setControlsButton(button_data):
     # button_data = utility.sanitizeJson(button_data)
@@ -48,4 +48,4 @@ def setControlsButton(button_data):
         128
     ]
 
-    bus.send(data, address)
+    bba.send(data)

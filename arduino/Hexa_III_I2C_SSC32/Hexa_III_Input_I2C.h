@@ -89,7 +89,7 @@
 #define SerSerial Serial
 #endif
 
-#define SLAVE_ADDRESS 0x04
+#define SLAVE_ADDRESS 8
 
 #ifndef SERIAL_BAUD
 #define SERIAL_BAUD 9600
@@ -228,51 +228,39 @@ void receiveData(int howMany) {
 
   // Wish the library had a valid way to verify that the read_gamepad succeeded... Will hack for now
   while (Wire.available()) {
+    // loop through all but the last
     for (int i = 0; i < howMany; i++) {
       abDualShock[i] = Wire.read();  // receive byte as a character
       // SerSerial.println(abDualShock[i]);
       // SerSerial.print('\n');
     }
 
-    // if ((ps2x.Analog(1) & 0xf0) == 0x70)
+      // Serial Debug
+      // SerSerial.println(abDualShock[0]);
+      // SerSerial.print("\n\r");
+      // SerSerial.println(abDualShock[1]);
+      // SerSerial.print("\n\r");
+      // SerSerial.println(abDualShock[2]);
+      // SerSerial.print("\n\r");
+      // SerSerial.println(abDualShock[3]);
+      // SerSerial.print("4: \n\r");
+      // SerSerial.println(abDualShock[4]);
+      // SerSerial.print("5: \n\r");
+      // SerSerial.println(abDualShock[5]);
+      // SerSerial.print("6: \n\r");
+      // SerSerial.println(abDualShock[6]);
+      // SerSerial.print("7: \n\r");
+      // SerSerial.println(abDualShock[7]);
+      // SerSerial.print("\n\r");
+      // SerSerial.println(abDualShock[8]);
+      // SerSerial.print("\n\r");
+      // SerSerial.println(abDualShock[9]);
+      // SerSerial.print("\n\r");
+
     // Lets check the checksum...to always be zero =)
     if (abDualShock[0] == 0) {
-#ifdef DBGSerial
-      if (g_fDebugOutput) {
-        // DBGSerial.print("PS2 Input: ");
-        // DBGSerial.print(ps2x.ButtonDataByte(), HEX);
-        // DBGSerial.print(":");
-        // DBGSerial.print(abDualShock[SER_LX], DEC);
-        // DBGSerial.print(" ");
-        // DBGSerial.print(abDualShock[SER_LY], DEC);
-        // DBGSerial.print(" ");
-        // DBGSerial.print(abDualShock[SER_RX], DEC);
-        // DBGSerial.print(" ");
-        // DBGSerial.println(abDualShock[SER_RY], DEC);
 
-        // Serial Debug
-        SerSerial.println(abDualShock[0]);
-        SerSerial.print("\n\r");
-        SerSerial.println(abDualShock[1]);
-        SerSerial.print("\n\r");
-        SerSerial.println(abDualShock[2]);
-        SerSerial.print("\n\r");
-        SerSerial.println(abDualShock[3]);
-        SerSerial.print("4: \n\r");
-        SerSerial.println(abDualShock[4]);
-        SerSerial.print("5: \n\r");
-        SerSerial.println(abDualShock[5]);
-        SerSerial.print("6: \n\r");
-        SerSerial.println(abDualShock[6]);
-        SerSerial.print("7: \n\r");
-        SerSerial.println(abDualShock[7]);
-        SerSerial.print("\n\r");
-        SerSerial.println(abDualShock[8]);
-        SerSerial.print("\n\r");
-        SerSerial.println(abDualShock[9]);
-        SerSerial.print("\n\r");
-      }
-#endif
+      wButtons = abDualShock[3];  // Skip the first byte.
 
 #ifdef OPT_DYNAMIC_ADJUST_LEGS
       boolean fAdjustLegPositions = false;

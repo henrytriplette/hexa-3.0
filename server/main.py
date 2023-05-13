@@ -62,8 +62,7 @@ socketio.on_event('setGimbalReset', gimbal.setGimbalReset, namespace='/')
 # Camera
 @app.route('/video_feed', methods=['GET'])
 def video_feed():
-    return Response(cameras.genFrames(),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+    return cameras.genFrames()
 
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000, debug=config["system"]["debug"])

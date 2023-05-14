@@ -9,6 +9,7 @@ from time import sleep
 # https://gpiozero.readthedocs.io/en/stable/installing.html
 # Pin numbering as follows:
 # https://gpiozero.readthedocs.io/en/stable/recipes.html#pin-numbering
+from gpiozero.pins.pigpio import PiGPIOFactory
 from gpiozero import Servo, AngularServo
 
 

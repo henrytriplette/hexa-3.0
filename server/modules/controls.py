@@ -47,5 +47,5 @@ def setControlsButton(button_data):
         128,
         128
     ]
-
+    print('Button:', data)
     bba.send(data)

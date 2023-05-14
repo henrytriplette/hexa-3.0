@@ -36,7 +36,7 @@
                 this.controlStore.updateButton(key);
             },
             updateToggleBot(value) {
-                this.controlStore.updateToggle('bot_on_off', value);
+                this.controlStore.updateButton('bot_on_off');
             },
             updateToggleBecSx(value) {
                 this.controlStore.updateToggle('toggle_bec_sx', value);

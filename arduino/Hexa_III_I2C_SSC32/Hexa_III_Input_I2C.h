@@ -77,7 +77,6 @@
 // [Include files]
 #if ARDUINO > 99
 #include <Arduino.h>  // Arduino 1.0
-
 #else
 #include < Wprogram.h>  // Arduino 0022
 
@@ -95,40 +94,40 @@
 #define SERIAL_BAUD 9600
 #endif
 
-#define WALKMODE 0
-#define TRANSLATEMODE 1
-#define ROTATEMODE 2
-#define SINGLELEGMODE 3
-#define GPPLAYERMODE 4
+#define WALKMODE          0
+#define TRANSLATEMODE     1
+#define ROTATEMODE        2
+#define SINGLELEGMODE     3
+#define GPPLAYERMODE      4
 
-#define SERB_START 1   //   bit3 - Start Button test
-#define SERB_SELECT 2  //   bit0 - Select Button test
+#define SERB_START       1      //   bit3 - Start Button test
+#define SERB_SELECT      2    //   bit0 - Select Button test
 
-#define SERB_L3 3  //   bit1 - L3 Button test
-#define SERB_L1 4  //  bit2 - L1 Button test
-#define SERB_L2 5  //  bit0 - L2 Button test
+#define SERB_L3          3    //   bit1 - L3 Button test
+#define SERB_L1          4    //  bit2 - L1 Button test
+#define SERB_L2          5    //  bit0 - L2 Button test
 
-#define SERB_R3 6  //   bit2 - R3 Button test (Horn)
-#define SERB_R1 7  //  bit3 - R1 Button test
-#define SERB_R2 8  //  bit1 - R2 Button test
+#define SERB_R3          6    //   bit2 - R3 Button test (Horn)
+#define SERB_R1          7    //  bit3 - R1 Button test
+#define SERB_R2          8    //  bit1 - R2 Button test
 
-#define SERB_PAD_UP 9      //   bit4 - Up Button test
-#define SERB_PAD_DOWN 10   //   bit6 - Down Button test
-#define SERB_PAD_LEFT 11   //   bit7 - Left Button test
-#define SERB_PAD_RIGHT 12  //   bit5 - Right Button test
+#define SERB_PAD_UP      9     //   bit4 - Up Button test
+#define SERB_PAD_DOWN    10    //   bit6 - Down Button test
+#define SERB_PAD_LEFT    11    //   bit7 - Left Button test
+#define SERB_PAD_RIGHT   12    //   bit5 - Right Button test
 
-#define SERB_TRIANGLE 13  // bit4 - Triangle Button test
-#define SERB_CIRCLE 14    // bit5 - Circle Button test
-#define SERB_CROSS 15     // bit6 - Cross Button test
-#define SERB_SQUARE 16    // bit7 - Square Button test
+#define SERB_TRIANGLE    13    // bit4 - Triangle Button test
+#define SERB_CIRCLE      14    // bit5 - Circle Button test
+#define SERB_CROSS       15    // bit6 - Cross Button test
+#define SERB_SQUARE      16    // bit7 - Square Button test
 
-#define SER_LX 4  // DualShock(5) - Left Stick Left/right
-#define SER_LY 5  // DualShock(6) - Left Stick Up/Down
-#define SER_RX 6  // DualShock(3) - Right stick Left/right
-#define SER_RY 7  // DualShock(4) - Right Stick Up/Down
+#define  SER_LX          4     // DualShock(5) - Left Stick Left/right
+#define  SER_LY          5     // DualShock(6) - Left Stick Up/Down
+#define  SER_RX          6     // DualShock(3) - Right stick Left/right
+#define  SER_RY          7     // DualShock(4) - Right Stick Up/Down
 
-#define cTravelDeadZone 4  // The deadzone for the analog input from the remote
-#define MAXPS2ERRORCNT 5   // How many times through the loop will we go before shutting off robot?
+#define cTravelDeadZone 4      //The deadzone for the analog input from the remote
+#define  MAXPS2ERRORCNT  5     // How many times through the loop will we go before shutting off robot?
 
 #ifndef MAX_BODY_Y
 #define MAX_BODY_Y 100
@@ -231,8 +230,12 @@ void receiveData(int howMany) {
     // loop through all but the last
     for (int i = 0; i < howMany; i++) {
       abDualShock[i] = Wire.read();  // receive byte as a character
-      // SerSerial.println(abDualShock[i]);
-      // SerSerial.print('\n');
+
+      // #ifdef DBGSerial
+      //   DBGSerial.print("I2C Init: ");
+      //   DBGSerial.print(abDualShock[i]);
+      //   DBGSerial.print('\n');
+      // #endif
     }
 
       // Serial Debug
@@ -445,6 +448,8 @@ void receiveData(int howMany) {
               MSound(2, 50, 2000, 50, 2250);
               g_InControlState.GaitType = 0;
             }
+
+            SerSerial.println("SELECT");
             GaitSelect();
           }
 
@@ -552,6 +557,8 @@ void receiveData(int howMany) {
 
           // Switch between sequences
           if (ButtonPressed(SERB_SELECT)) {  // Select Button Test
+            SerSerial.println("SELECT");
+            
             if (!g_ServoDriver.FIsGPSeqActive()) {
               if (GPSeq < 5) {  // Max sequence
                 MSound(1, 50, 1500);

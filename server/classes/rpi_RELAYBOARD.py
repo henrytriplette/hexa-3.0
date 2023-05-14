@@ -3,8 +3,7 @@
 Driver for the Relay Board
 '''
 
-import sys
-import time
+from time import sleep
 
 # Make sure you install required libraries:
 # https://gpiozero.readthedocs.io/en/stable/installing.html
@@ -37,5 +36,5 @@ class RELAYBOARD:
         do this BEFORE hooking up anything to the relay and watch LED on the relay board
         '''
         self.relay.on()
-        time.sleep(1)
+        sleep(1)
         self.relay.off()

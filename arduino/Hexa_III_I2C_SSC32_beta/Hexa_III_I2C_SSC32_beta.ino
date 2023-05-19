@@ -28,9 +28,9 @@
 #include <Wire.h>
 #include <SoftwareSerial.h>
 
-#include "Hex_CFG.h"
-#include <Hexa_III.h>
-#include <Hexa_III_Input_I2C.h>
-#include <Hexa_III_Driver_SSC32.h>
-#include <Hexa_III_Code.h>
+#include "Hex_Cfg.h"
+#include "Hexa_III.h"
+#include "Hexa_III_Input_I2C.h"
+#include "Hexa_III_Driver_SSC32.h"
+#include "Hexa_III_Code.h"
 

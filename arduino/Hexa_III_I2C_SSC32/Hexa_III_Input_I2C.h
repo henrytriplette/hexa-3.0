@@ -623,7 +623,7 @@ void receiveData(int howMany) {
 // SerialTurnRobotOff - code used couple of places so save a little room...
 //==============================================================================
 void SerialTurnRobotOff(void) {
-  // Turn off
+  //Turn off
   g_InControlState.BodyPos.x = 0;
   g_InControlState.BodyPos.y = 0;
   g_InControlState.BodyPos.z = 0;
@@ -637,7 +637,7 @@ void SerialTurnRobotOff(void) {
   g_BodyYShift = 0;
 #ifdef OPT_SINGLELEG
   g_InControlState.SelectedLeg = 255;
-#endif
+#endif  
   g_InControlState.fRobotOn = 0;
-  AdjustLegPositionsToBodyHeight();  // Put main workings into main program file
+  AdjustLegPositionsToBodyHeight();    // Put main workings into main program file
 }

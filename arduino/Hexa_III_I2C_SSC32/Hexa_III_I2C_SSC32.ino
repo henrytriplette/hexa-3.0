@@ -22,7 +22,10 @@
 //#define OPT_SSC_FORWARDER       // Only useful if terminal monitor is enabled
 #define OPT_FIND_SERVO_OFFSETS  // Only useful if terminal monitor is enabled
 #endif
+
 #define OPT_GPPLAYER
+// #define OPT_SINGLELEG
+// #define OPT_DYNAMIC_ADJUST_LEGS
 
 // Which type of control(s) do you want to compile in
 #define DBGSerial Serial
@@ -33,8 +36,6 @@
 #else
 #endif
 
-#define USEPS2
-
 #define USE_SSC32
 
 #define cSSC_BAUD 38400  //SSC32 BAUD rate
@@ -43,45 +44,52 @@
 //  /// Botboarduino Pin Numbers  ///
 //  /////////////////////////////////
 
-#define SOUND_PIN 5  // Botboarduino JR pin number
-#define PS2_DAT 6
-#define PS2_CMD 7
-#define PS2_SEL 8
-#define PS2_CLK 9
+#define SOUND_PIN    5        // Botboarduino JR pin number
+#define PS2_DAT      6        
+#define PS2_CMD      7
+#define PS2_SEL      8
+#define PS2_CLK      9
+
 // If we are using a SSC-32 then:
 // If were are running on an Arduino Mega we will use one of the hardware serial port, default to Serial1 above.
 // If on Non mega, if the IO pins are set to 0, we will overload the hardware Serial port
 // Else we will user SoftwareSerial to talk to the SSC-32
-#define cSSC_OUT 12  //Output pin for (SSC32 RX) on BotBoard (Yellow)
-#define cSSC_IN 13   //Input pin for (SSC32 TX) on BotBoard (Blue)
+#define cSSC_OUT     12      	//Output pin for (SSC32 RX) on BotBoard (Yellow)
+#define cSSC_IN      13      	//Input pin for (SSC32 TX) on BotBoard (Blue)
 
 //  //////////////////////////
 //  /// SSC-32 PIN NUMBERS ///
 //  //////////////////////////
 // This section defines which servos are connected to which pins on the SSC32
-#define cRRCoxaPin 0   //Rear Right leg Hip Horizontal
-#define cRRFemurPin 1  //Rear Right leg Hip Vertical
-#define cRRTibiaPin 2  //Rear Right leg Knee
+#define cRRCoxaPin      0   //Rear Right leg Hip Horizontal
+#define cRRFemurPin     1   //Rear Right leg Hip Vertical
+#define cRRTibiaPin     2   //Rear Right leg Knee
+#define cRRTarsPin      3   // Tar
 
-#define cRMCoxaPin 4   //Middle Right leg Hip Horizontal
-#define cRMFemurPin 5  //Middle Right leg Hip Vertical
-#define cRMTibiaPin 6  //Middle Right leg Knee
+#define cRMCoxaPin      4   //Middle Right leg Hip Horizontal
+#define cRMFemurPin     5   //Middle Right leg Hip Vertical
+#define cRMTibiaPin     6   //Middle Right leg Knee
+#define cRMTarsPin      7   // Tar
 
-#define cRFCoxaPin 8    //Front Right leg Hip Horizontal
-#define cRFFemurPin 9   //Front Right leg Hip Vertical
-#define cRFTibiaPin 10  //Front Right leg Knee
+#define cRFCoxaPin      8   //Front Right leg Hip Horizontal
+#define cRFFemurPin     9   //Front Right leg Hip Vertical
+#define cRFTibiaPin     10   //Front Right leg Knee
+#define cRFTarsPin      11   // Tar
 
-#define cLRCoxaPin 16   //Rear Left leg Hip Horizontal
-#define cLRFemurPin 17  //Rear Left leg Hip Vertical
-#define cLRTibiaPin 18  //Rear Left leg Knee
+#define cLRCoxaPin      16   //Rear Left leg Hip Horizontal
+#define cLRFemurPin     17   //Rear Left leg Hip Vertical
+#define cLRTibiaPin     18   //Rear Left leg Knee
+#define cLRTarsPin      19   // Tar
 
-#define cLMCoxaPin 20   //Middle Left leg Hip Horizontal
-#define cLMFemurPin 21  //Middle Left leg Hip Vertical
-#define cLMTibiaPin 22  //Middle Left leg Knee
+#define cLMCoxaPin      20   //Middle Left leg Hip Horizontal
+#define cLMFemurPin     21   //Middle Left leg Hip Vertical
+#define cLMTibiaPin     22   //Middle Left leg Knee
+#define cLMTarsPin      23   // Tar
 
-#define cLFCoxaPin 24   //Front Left leg Hip Horizontal
-#define cLFFemurPin 25  //Front Left leg Hip Vertical
-#define cLFTibiaPin 26  //Front Left leg Knee
+#define cLFCoxaPin      24   //Front Left leg Hip Horizontal
+#define cLFFemurPin     25   //Front Left leg Hip Vertical
+#define cLFTibiaPin     26   //Front Left leg Knee
+#define cLFTarsPin      27   // Tar
 
 //  ///////////////////////
 //  /// MIN/MAX ANGLES  ///
@@ -90,53 +98,53 @@
 // prevents the servos from being driven too far and damaging themselves or other
 // parts of the hexapod.
 
-//  Mechanical limits of the Right Rear Leg, decimals = 1
-#define cRRCoxaMin1 -260
-#define cRRCoxaMax1 740
-#define cRRFemurMin1 -1010
-#define cRRFemurMax1 950
-#define cRRTibiaMin1 -1060
-#define cRRTibiaMax1 770
+//Mechanical limits of the Right Rear Leg, decimals = 1
+#define cRRCoxaMin1	-260
+#define cRRCoxaMax1	740
+#define cRRFemurMin1	-1010
+#define cRRFemurMax1	950
+#define cRRTibiaMin1	-1060
+#define cRRTibiaMax1	770
 
-//  Mechanical limits of the Right Middle Leg, decimals = 1
-#define cRMCoxaMin1 -530
-#define cRMCoxaMax1 530
-#define cRMFemurMin1 -1010
-#define cRMFemurMax1 950
-#define cRMTibiaMin1 -1060
-#define cRMTibiaMax1 770
+//Mechanical limits of the Right Middle Leg, decimals = 1
+#define cRMCoxaMin1	-530
+#define cRMCoxaMax1	530
+#define cRMFemurMin1	-1010
+#define cRMFemurMax1	950
+#define cRMTibiaMin1	-1060
+#define cRMTibiaMax1	770
 
-//  Mechanical limits of the Right Front Leg, decimals = 1
-#define cRFCoxaMin1 -580
-#define cRFCoxaMax1 740
-#define cRFFemurMin1 -1010
-#define cRFFemurMax1 950
-#define cRFTibiaMin1 -1060
-#define cRFTibiaMax1 770
+//Mechanical limits of the Right Front Leg, decimals = 1
+#define cRFCoxaMin1	-580
+#define cRFCoxaMax1	740
+#define cRFFemurMin1	-1010
+#define cRFFemurMax1	950
+#define cRFTibiaMin1	-1060
+#define cRFTibiaMax1	770
 
-//  Mechanical limits of the Left Rear Leg, decimals = 1
-#define cLRCoxaMin1 -740
-#define cLRCoxaMax1 260
-#define cLRFemurMin1 -950
-#define cLRFemurMax1 1010
-#define cLRTibiaMin1 -770
-#define cLRTibiaMax1 1060
+//Mechanical limits of the Left Rear Leg, decimals = 1
+#define cLRCoxaMin1	-740
+#define cLRCoxaMax1	260
+#define cLRFemurMin1	-950
+#define cLRFemurMax1	1010
+#define cLRTibiaMin1	-770
+#define cLRTibiaMax1	1060
 
-//  Mechanical limits of the Left Middle Leg, decimals = 1
-#define cLMCoxaMin1 -530
-#define cLMCoxaMax1 530
-#define cLMFemurMin1 -950
-#define cLMFemurMax1 1010
-#define cLMTibiaMin1 -770
-#define cLMTibiaMax1 1060
+//Mechanical limits of the Left Middle Leg, decimals = 1
+#define cLMCoxaMin1	-530
+#define cLMCoxaMax1	530
+#define cLMFemurMin1	-950
+#define cLMFemurMax1	1010
+#define cLMTibiaMin1	-770
+#define cLMTibiaMax1	1060
 
-//  Mechanical limits of the Left Front Leg, decimals = 1
-#define cLFCoxaMin1 -740
-#define cLFCoxaMax1 580
-#define cLFFemurMin1 -950
-#define cLFFemurMax1 1010
-#define cLFTibiaMin1 -770
-#define cLFTibiaMax1 1060
+//Mechanical limits of the Left Front Leg, decimals = 1
+#define cLFCoxaMin1	-740
+#define cLFCoxaMax1	580
+#define cLFFemurMin1	-950
+#define cLFFemurMax1	1010
+#define cLFTibiaMin1	-770
+#define cLFTibiaMax1	1060
 
 //  ///////////////////////
 //  /// LEG DIMENSIONS  ///
@@ -147,9 +155,16 @@
 // There are two ways this section can be configured. First, if all the sections of all the legs are
 // the same length, universal dimensions can be used. These are the dimensions with XX in the beginning
 // part. The dimensions are millimeters.
-#define cXXCoxaLength 29
-#define cXXFemurLength 85
-#define cXXTibiaLength 125
+
+// Capers Defaults
+// #define cXXCoxaLength 29
+// #define cXXFemurLength 85
+// #define cXXTibiaLength 125
+
+// KurtE defaults
+#define cXXCoxaLength     29    // This is for TH3-R legs
+#define cXXFemurLength    76
+#define cXXTibiaLength    106
 
 // If the lengths of each leg are not the same, the legs that differ from the universal lengths can be
 // set individually in th sections below.
@@ -196,19 +211,35 @@
 #define cLMCoxaAngle1 0     //  Default Coxa setup angle, decimals = 1
 #define cLFCoxaAngle1 600   //  Default Coxa setup angle, decimals = 1
 
-#define cRROffsetX -39  //  Distance X from center of the body to the Right Rear coxa
-#define cRROffsetZ 75   //  Distance Z from center of the body to the Right Rear coxa
-#define cRMOffsetX -64  //  Distance X from center of the body to the Right Middle coxa
-#define cRMOffsetZ 0    //  Distance Z from center of the body to the Right Middle coxa
-#define cRFOffsetX -39  //  Distance X from center of the body to the Right Front coxa
-#define cRFOffsetZ -75  //  Distance Z from center of the body to the Right Front coxa
+// Capers Default
+// #define cRROffsetX -39  //  Distance X from center of the body to the Right Rear coxa
+// #define cRROffsetZ 75   //  Distance Z from center of the body to the Right Rear coxa
+// #define cRMOffsetX -64  //  Distance X from center of the body to the Right Middle coxa
+// #define cRMOffsetZ 0    //  Distance Z from center of the body to the Right Middle coxa
+// #define cRFOffsetX -39  //  Distance X from center of the body to the Right Front coxa
+// #define cRFOffsetZ -75  //  Distance Z from center of the body to the Right Front coxa
 
-#define cLROffsetX 39   //  Distance X from center of the body to the Left Rear coxa
-#define cLROffsetZ 75   //  Distance Z from center of the body to the Left Rear coxa
-#define cLMOffsetX 64   //  Distance X from center of the body to the Left Middle coxa
-#define cLMOffsetZ 0    //  Distance Z from center of the body to the Left Middle coxa
-#define cLFOffsetX 39   //  Distance X from center of the body to the Left Front coxa
-#define cLFOffsetZ -75  //  Distance Z from center of the body to the Left Front coxa
+// #define cLROffsetX 39   //  Distance X from center of the body to the Left Rear coxa
+// #define cLROffsetZ 75   //  Distance Z from center of the body to the Left Rear coxa
+// #define cLMOffsetX 64   //  Distance X from center of the body to the Left Middle coxa
+// #define cLMOffsetZ 0    //  Distance Z from center of the body to the Left Middle coxa
+// #define cLFOffsetX 39   //  Distance X from center of the body to the Left Front coxa
+// #define cLFOffsetZ -75  //  Distance Z from center of the body to the Left Front coxa
+
+// KurtE defaults
+#define cRROffsetX 	-43	    //Distance X from center of the body to the Right Rear coxa
+#define cRROffsetZ 	82	    //Distance Z from center of the body to the Right Rear coxa
+#define cRMOffsetX 	-63	    //Distance X from center of the body to the Right Middle coxa
+#define cRMOffsetZ 	0	    //Distance Z from center of the body to the Right Middle coxa
+#define cRFOffsetX 	-43	    //Distance X from center of the body to the Right Front coxa
+#define cRFOffsetZ 	-82	    //Distance Z from center of the body to the Right Front coxa
+
+#define cLROffsetX 	43	    //Distance X from center of the body to the Left Rear coxa
+#define cLROffsetZ 	82	    //Distance Z from center of the body to the Left Rear coxa
+#define cLMOffsetX 	63	    //Distance X from center of the body to the Left Middle coxa
+#define cLMOffsetZ 	0	    //Distance Z from center of the body to the Left Middle coxa
+#define cLFOffsetX 	43	    //Distance X from center of the body to the Left Front coxa
+#define cLFOffsetZ 	-82	    //Distance Z from center of the body to the Left Front coxa
 
 //  /////////////////////////////
 //  /// START POSITIONS FEET  ///
@@ -216,16 +247,17 @@
 // This section specifies the starting positions of the feet. The robot will assume a
 // position with the feet at these starting positions on startup.
 
-#define cHexInitXZ 105
+// KurtE defaults
+#define CHexInitXZ 105
 #define CHexInitXZCos60 53  // COS(60) = .5
 #define CHexInitXZSin60 91  // sin(60) = .866
-#define CHexInitY 25
+#define CHexInitY 125
 
 #define cRRInitPosX CHexInitXZCos60  // Start positions of the Right Rear leg
 #define cRRInitPosY CHexInitY
 #define cRRInitPosZ CHexInitXZSin60
 
-#define cRMInitPosX cHexInitXZ  //  Start positions of the Right Middle leg
+#define cRMInitPosX CHexInitXZ  //  Start positions of the Right Middle leg
 #define cRMInitPosY CHexInitY
 #define cRMInitPosZ 0
 
@@ -237,7 +269,7 @@
 #define cLRInitPosY CHexInitY
 #define cLRInitPosZ CHexInitXZSin60
 
-#define cLMInitPosX cHexInitXZ  //  Start positions of the Left Middle leg
+#define cLMInitPosX CHexInitXZ  //  Start positions of the Left Middle leg
 #define cLMInitPosY CHexInitY
 #define cLMInitPosZ 0
 

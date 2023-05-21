@@ -1,9 +1,7 @@
-//====================================================================
-//Project Lynxmotion Phoenix
+//  Project: Capers II Hexapod
+//  Author: Toglefritz
 //
-// Servo Driver - This version is setup to use the SSC-32 to control
-// the servos.
-//====================================================================
+// Servo Driver - This version is setup to use the SSC-32 to control the servos.
 
 //Servo Pin numbers - May be SSC-32 or actual pins on main controller, depending on configuration.
 #ifdef QUADMODE
@@ -273,7 +271,7 @@ uint8_t ServoDriver::GPNumSteps(void)          // How many steps does the curren
     SSCSerial.print(F("EER -"));
     SSCSerial.print(wSeqStart, DEC);
     SSCSerial.println(F(";1"));
-    cbRead = SSCRead((byte*)bGPCntSteps, sizeof(bGPCntSteps), 10000, (word)-1);  // Try to get the pointer to sequence
+    cbRead = SSCRead((byte*)&bGPCntSteps, sizeof(bGPCntSteps), 10000, (word)-1);  // Try to get the pointer to sequence
   }
   return bGPCntSteps;
 }
@@ -440,7 +438,7 @@ extern void SSCForwarder(void);
 void ServoDriver::ShowTerminalCommandList(void) 
 {
 #ifdef OPT_FIND_SERVO_OFFSETS
-  DBGSerial.println(F("O - Enter Servo offset mode"));
+  DBGSerial.println(F("O - Adjust servo offsets (servo offset mode)"));
 #endif        
 #ifdef OPT_SSC_FORWARDER
   DBGSerial.println(F("S - SSC Forwarder"));
@@ -506,7 +504,6 @@ void  SSCForwarder(void)
 
 void FindServoOffsets()
 {
-  // not clean but...
   byte abSSCServoNum[NUMSERVOSPERLEG*CNT_LEGS];           // array of servos...
   signed short asOffsets[NUMSERVOSPERLEG*CNT_LEGS];        // we have 18 servos to find/set offsets for...
   signed char asOffsetsRead[NUMSERVOSPERLEG*CNT_LEGS];    // array for our read in servos...
@@ -563,8 +560,10 @@ void FindServoOffsets()
   }
 
   // OK lets move all of the servos to their zero point.
-  Serial.println("Find Servo Zeros.\n$-Exit, +- changes, *-change servo");
-  Serial.println("    0-n Chooses a leg, C-Coxa, F-Femur, T-Tibia");
+  Serial.println("Adjust the zero position of each servo.");
+  Serial.println("First choose a leg: 0-5 chooses a leg; C-Coxa, F-Femur, T-Tibia chooses a servo");
+  Serial.println("Leg order:\n 0: RR \n 1: RM \n 2: RF \n 3: LR \n 4: LM \n 5: LF");
+  Serial.println("Commands:  $ exit; +, - changes zero position; * change servo");
 
   sSN = true;
   while(!fExit) {

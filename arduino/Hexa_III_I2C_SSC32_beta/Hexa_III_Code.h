@@ -23,13 +23,13 @@
 #include <Arduino.h>
 #else
 #endif
-#include <pins_arduino.h>       
+#include <pins_arduino.h>
+
 #define BalanceDivFactor CNT_LEGS 
 
 // Only compile in Debug code if we have something to output to
 #ifdef DBGSerial
 #define DEBUG
-//#define DEBUG_X
 #endif
 
 
@@ -167,15 +167,15 @@ static const word GetSin[] PROGMEM = {
 //    ////////////  SERVO HORN OFFSETS  ////////////
 // Standard Hexapod...
 // Servo Horn offsets
-#ifdef cRRFemurHornOffset1   // per leg configuration
-  static const short cFemurHornOffset1[] PROGMEM = {
-    cRRFemurHornOffset1, cRMFemurHornOffset1, cRFFemurHornOffset1, cLRFemurHornOffset1, cLMFemurHornOffset1, cLFFemurHornOffset1};
-  #define CFEMURHORNOFFSET1(LEGI) ((short)pgm_read_word(&cFemurHornOffset1[LEGI]))
-  #else   // Fixed per leg, if not defined 0
-    #ifndef cFemurHornOffset1
-    #define cFemurHornOffset1  0
+#ifdef cRRTibiaHornOffset1   // per leg configuration
+static const short cTibiaHornOffset1[] PROGMEM = {
+  cRRTibiaHornOffset1, cRMTibiaHornOffset1, cRFTibiaHornOffset1, cLRTibiaHornOffset1, cLMTibiaHornOffset1, cLFTibiaHornOffset1};
+#define CTIBIAHORNOFFSET1(LEGI) ((short)pgm_read_word(&cTibiaHornOffset1[LEGI]))
+#else   // Fixed per leg, if not defined 0
+#ifndef cTibiaHornOffset1
+#define cTibiaHornOffset1  0
 #endif
-#define CFEMURHORNOFFSET1(LEGI)  (cFemurHornOffset1)
+#define CTIBIAHORNOFFSET1(LEGI)  (cTibiaHornOffset1)
 #endif
 
 #ifdef cRRTibiaHornOffset1   // per leg configuration
@@ -280,9 +280,6 @@ boolean g_fEnableServos = true;
 short           CoxaAngle1[CNT_LEGS];    //Actual Angle of the horizontal hip, decimals = 1
 short           FemurAngle1[CNT_LEGS];   //Actual Angle of the vertical hip, decimals = 1
 short           TibiaAngle1[CNT_LEGS];   //Actual Angle of the knee, decimals = 1
-#ifdef c4DOF
-short           TarsAngle1[CNT_LEGS];	  //Actual Angle of the knee, decimals = 1
-#endif
 
 //[POSITIONS SINGLE LEG CONTROL]
 

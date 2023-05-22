@@ -35,45 +35,6 @@
 #define cSSC_BAUD        38400   //SSC32 BAUD rate
 
 //  //////////////////////////    CONFIGURATION   ///////////////////////////
- 
-//   ____________________________(((((((((((((((____________________________    
-//   ____________________________(((((((((((((((((___________________________    
-//   ____________________________(((((((((((((((((___________________________    
-//   ___________________________((((((((((((((((((#__________________________    
-//   ___________________________(((((((((((((((((((__________________________    
-//   ________________________&(((((((((((((((((((((((________________________    
-//   _______&((((((_______#(((((((((((((((((((((((((((((#_______((((((_______    
-//   ______#((((((((((((((((((((((((/,.......,/((((((((((((((((((((((((#_____    
-//   _____(((((((((((((((((((((,...................*(((((((((((((((((((((____    
-//   ____(((((((((((((((((((,.........................*(((((((((((((((((((___    
-//   ___((((((((((((((((((...............................((((((((((((((((((__    
-//   _%(((((((((((((((((,.........(#############(........./(((((((((((((((((_    
-//   __((((((((((((((((........(###################(........#(((((((((((((((_    
-//   ____(((((((((((((......./########(.....(########,.......##(((((((((((___    
-//   ______((((((((((.......(######............,######/.......###(((((((_____    
-//   ________(((((((/....../#####/...............(#####,......#####((#_______    
-//   _________((((((.......#####(.................######......,######________    
-//   _________((((((.......#####...................#####.......######________    
-//   _________((((((.......#####...................#####*******######________    
-//   _________((((((.......#####/.................(#####******/######________    
-//   ________(((((((/......##### ............... #####/******########_______    
-//   ______#(((((((((.......#######.............######(*******#########%_____    
-//   ____(((((((((((((.......(########*...../########(*******#############___    
-//   __((((((((((((((((........#####################********################_    
-//   _&(((((((((((((((((..........###############*********/#################_    
-//   ___((((((((((((((((((.........**********************##################__    
-//   ____(((((((((((((((((((......********************/###################___    
-//   _____((((((((((((((((((((#..******************/#####################____    
-//   ______(((((((((((((((((((((####/*********(#########################_____    
-//   _______%((((((_______((((((((#######################______%######_______    
-//   _________________________((((((#################________________________    
-//   ___________________________((((((#############__________________________    
-//   ___________________________((((((((###########__________________________    
-//   ____________________________((((((((#########___________________________    
-//   ____________________________(((((((((((######___________________________    
-//   _____________________________((((((((((((###____________________________       
-
-//  //////////////////////////    CONFIGURATION   ///////////////////////////
 
 //  /////////////////////////////////
 //  /// Botboarduino Pin Numbers  ///
@@ -95,29 +56,36 @@
 //  /// SSC-32 PIN NUMBERS ///
 //  //////////////////////////
 // This section defines which servos are connected to which pins on the SSC32
+//[SSC PIN NUMBERS]
 #define cRRCoxaPin      0   //Rear Right leg Hip Horizontal
 #define cRRFemurPin     1   //Rear Right leg Hip Vertical
 #define cRRTibiaPin     2   //Rear Right leg Knee
+#define cRRTarsPin      3   // Tar
 
 #define cRMCoxaPin      4   //Middle Right leg Hip Horizontal
 #define cRMFemurPin     5   //Middle Right leg Hip Vertical
 #define cRMTibiaPin     6   //Middle Right leg Knee
+#define cRMTarsPin      7   // Tar
 
 #define cRFCoxaPin      8   //Front Right leg Hip Horizontal
 #define cRFFemurPin     9   //Front Right leg Hip Vertical
 #define cRFTibiaPin     10   //Front Right leg Knee
+#define cRFTarsPin      11   // Tar
 
 #define cLRCoxaPin      16   //Rear Left leg Hip Horizontal
 #define cLRFemurPin     17   //Rear Left leg Hip Vertical
 #define cLRTibiaPin     18   //Rear Left leg Knee
+#define cLRTarsPin      19   // Tar
 
 #define cLMCoxaPin      20   //Middle Left leg Hip Horizontal
 #define cLMFemurPin     21   //Middle Left leg Hip Vertical
 #define cLMTibiaPin     22   //Middle Left leg Knee
+#define cLMTarsPin      23   // Tar
 
 #define cLFCoxaPin      24   //Front Left leg Hip Horizontal
 #define cLFFemurPin     25   //Front Left leg Hip Vertical
 #define cLFTibiaPin     26   //Front Left leg Knee
+#define cLFTarsPin      27   // Tar
 
 //  ///////////////////////
 //  /// MIN/MAX ANGLES  ///
@@ -183,9 +151,14 @@
 // There are two ways this section can be configured. First, if all the sections of all the legs are
 // the same length, universal dimensions can be used. These are the dimensions with XX in the beginning
 // part. The dimensions are millimeters.
-#define cXXCoxaLength     29    
-#define cXXFemurLength    85
-#define cXXTibiaLength    125
+// #define cXXCoxaLength     29    
+// #define cXXFemurLength    85
+// #define cXXTibiaLength    125
+
+// KurtE
+#define cXXCoxaLength 29 // This is for TH3-R legs
+#define cXXFemurLength 76
+#define cXXTibiaLength 106
 
 // If the lengths of each leg are not the same, the legs that differ from the universal lengths can be
 // set individually in th sections below.
@@ -232,19 +205,33 @@
 #define cLMCoxaAngle1    0          //  Default Coxa setup angle, decimals = 1
 #define cLFCoxaAngle1    600        //  Default Coxa setup angle, decimals = 1
 
-#define cRROffsetX  -39     //  Distance X from center of the body to the Right Rear coxa
-#define cRROffsetZ  75      //  Distance Z from center of the body to the Right Rear coxa
-#define cRMOffsetX  -64     //  Distance X from center of the body to the Right Middle coxa
-#define cRMOffsetZ  0       //  Distance Z from center of the body to the Right Middle coxa
-#define cRFOffsetX  -39     //  Distance X from center of the body to the Right Front coxa
-#define cRFOffsetZ  -75     //  Distance Z from center of the body to the Right Front coxa
+// #define cRROffsetX  -39     //  Distance X from center of the body to the Right Rear coxa
+// #define cRROffsetZ  75      //  Distance Z from center of the body to the Right Rear coxa
+// #define cRMOffsetX  -64     //  Distance X from center of the body to the Right Middle coxa
+// #define cRMOffsetZ  0       //  Distance Z from center of the body to the Right Middle coxa
+// #define cRFOffsetX  -39     //  Distance X from center of the body to the Right Front coxa
+// #define cRFOffsetZ  -75     //  Distance Z from center of the body to the Right Front coxa
 
-#define cLROffsetX  39      //  Distance X from center of the body to the Left Rear coxa
-#define cLROffsetZ  75      //  Distance Z from center of the body to the Left Rear coxa
-#define cLMOffsetX  64      //  Distance X from center of the body to the Left Middle coxa
-#define cLMOffsetZ  0       //  Distance Z from center of the body to the Left Middle coxa
-#define cLFOffsetX  39      //  Distance X from center of the body to the Left Front coxa
-#define cLFOffsetZ  -75     //  Distance Z from center of the body to the Left Front coxa
+// #define cLROffsetX  39      //  Distance X from center of the body to the Left Rear coxa
+// #define cLROffsetZ  75      //  Distance Z from center of the body to the Left Rear coxa
+// #define cLMOffsetX  64      //  Distance X from center of the body to the Left Middle coxa
+// #define cLMOffsetZ  0       //  Distance Z from center of the body to the Left Middle coxa
+// #define cLFOffsetX  39      //  Distance X from center of the body to the Left Front coxa
+// #define cLFOffsetZ  -75     //  Distance Z from center of the body to the Left Front coxa
+
+#define cRROffsetX -43 // Distance X from center of the body to the Right Rear coxa
+#define cRROffsetZ 82  // Distance Z from center of the body to the Right Rear coxa
+#define cRMOffsetX -63 // Distance X from center of the body to the Right Middle coxa
+#define cRMOffsetZ 0   // Distance Z from center of the body to the Right Middle coxa
+#define cRFOffsetX -43 // Distance X from center of the body to the Right Front coxa
+#define cRFOffsetZ -82 // Distance Z from center of the body to the Right Front coxa
+
+#define cLROffsetX 43  // Distance X from center of the body to the Left Rear coxa
+#define cLROffsetZ 82  // Distance Z from center of the body to the Left Rear coxa
+#define cLMOffsetX 63  // Distance X from center of the body to the Left Middle coxa
+#define cLMOffsetZ 0   // Distance Z from center of the body to the Left Middle coxa
+#define cLFOffsetX 43  // Distance X from center of the body to the Left Front coxa
+#define cLFOffsetZ -82 // Distance Z from center of the body to the Left Front coxa
 
 //  /////////////////////////////
 //  /// START POSITIONS FEET  ///

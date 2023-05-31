@@ -1,0 +1,57 @@
+#hera
+    width: 100vw
+    height: 100vh
+
+    background-color: #424242
+    position: relative
+
+    display: grid
+    grid-template-columns: 1fr
+    grid-template-rows: 3rem auto minmax(1rem, 30px)
+    grid-column-gap: 0px
+    grid-row-gap: 0px
+
+    .header
+        grid-area: 1 / 1 / 2 / 2
+
+    .container
+        height: 100%
+        overflow: auto
+
+        grid-area: 2 / 1 / 3 / 2
+        display: grid
+        grid-template-columns: repeat(2, 1fr)
+        grid-template-rows: repeat(2, 1fr)
+        grid-column-gap: 0px
+        grid-row-gap: 0px
+
+        +breakpoint(medium)
+            grid-template-columns: repeat(3, 1fr)
+            grid-template-rows: 1fr
+
+        .left-panel
+            grid-area: 2 / 1 / 3 / 2
+            +breakpoint(medium)
+                grid-area: 1 / 1 / 2 / 2
+
+        .center-panel
+            grid-area: 1 / 1 / 2 / 3
+            margin-top: 10px
+            +breakpoint(medium)
+                margin-top: 0
+                grid-area: 1 / 2 / 2 / 3
+
+        .right-panel
+            grid-area: 2 / 2 / 3 / 3
+            +breakpoint(medium)
+                grid-area: 1 / 3 / 2 / 4
+
+    .container-full
+        margin: 1rem
+
+    .footer
+        grid-area: 3 / 1 / 4 / 2
+
+.uk-navbar-nav > li > a,
+.uk-navbar-item, .uk-navbar-toggle
+    min-height: 40px

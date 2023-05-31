@@ -18,7 +18,7 @@
     "socket.io-client": "^4.6.0",
     "throttle-debounce": "^5.0.0",
     "uikit": "^3.16.1",
-    "uil": "^4.2.8",
+    "uil": "^4.2.9",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },

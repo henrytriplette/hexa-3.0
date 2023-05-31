@@ -13,6 +13,7 @@
 <script>
     // UTL.gui
     import * as UIL from 'uil';
+    import { getMaxW } from '@/utils/Utility';
 
     // Store
     import { storeToRefs } from 'pinia';
@@ -38,7 +39,7 @@
                 this.controlStore.updateJoystick('left_joystick', value);
             },
             generateUI() {
-                this.maxW = Math.floor(window.innerWidth / 3 - 1);
+                this.maxW = getMaxW();
 
                 this.ui = new UIL.Gui({
                     css: 'top:0; left:50%;',

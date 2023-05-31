@@ -14,6 +14,7 @@
     // UTL.gui
     import * as UIL from 'uil';
     import { GIMBAL } from '@/constants/Gimbal';
+    import { getMaxW } from '@/utils/Utility';
 
     // Store
     import { storeToRefs } from 'pinia';
@@ -63,7 +64,7 @@
                 this.controlStore.updateGimbalReset(value);
             },
             generateUI() {
-                this.maxW = Math.floor(window.innerWidth / 3 - 1);
+                this.maxW = getMaxW('center');
 
                 this.ui = new UIL.Gui({
                     css: 'top:0; left:50%;',

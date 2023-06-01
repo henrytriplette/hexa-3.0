@@ -1,6 +1,103 @@
 <template>
     <div class="center-panel" id="center-panel">
-        <div id="center-gui" ref="root"></div>
+        <div class="uk-width-1-1">
+            <ul class="uk-switcher head-switcher">
+                <li class="uk-height-medium">Camera</li>
+                <li class="uk-height-medium">
+                    <a class="uk-button uk-button-primary" @click="updateToggle('toggle_bec_sx')"
+                        >Bec SX ON</a
+                    >
+                    <a class="uk-button uk-button-primary" @click="updateToggle('toggle_bec_dx')"
+                        >Bec DX ON</a
+                    >
+                    <a class="uk-button uk-button-primary" @click="updateToggle('toggle_light')"
+                        >Lights ON</a
+                    >
+                    <a class="uk-button uk-button-primary" @click="updateToggle('toggle_gimbal')"
+                        >Gimbal ON</a
+                    >
+                </li>
+                <li class="uk-height-medium">
+                    <a class="uk-button uk-button-primary" @click="updateButton('switch_gait')"
+                        >Switch Gaits</a
+                    >
+                    <a
+                        class="uk-button uk-button-primary"
+                        @click="updateButton('adjust_leg_position')"
+                        >Adjust leg position</a
+                    >
+                    <a class="uk-button uk-button-primary" @click="updateButton('bot_on_off')"
+                        >Bot ON/OFF</a
+                    >
+                </li>
+                <li class="uk-height-medium">
+                    <button class="uk-button uk-button-primary" @click="updateGimbalReset">
+                        Reset Gimbal
+                    </button>
+                    Gimbal Correction
+                    <div class="uk-margin">
+                        <label class="uk-form-label">
+                            <span class="uk-text-small"
+                                >X <small>({{ gimbal.x }})</small></span
+                            >
+                        </label>
+                        <div class="uk-form-controls">
+                            <input
+                                v-model="gimbal.x"
+                                @change="updateGimbal('x', gimbal.x)"
+                                name="gimbal_x"
+                                class="uk-range"
+                                type="range"
+                                :min="GIMBAL.minX"
+                                :max="GIMBAL.maxX"
+                                step="1"
+                            />
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label">
+                            <span class="uk-text-small">Y <small>({{ gimbal.y }})</small></span>
+                        </label>
+                        <div class="uk-form-controls">
+                            <input
+                                v-model="gimbal.y"
+                                @change="updateGimbal('y', gimbal.y)"
+                                name="gimbal_y"
+                                class="uk-range"
+                                type="range"
+                                :min="GIMBAL.minY"
+                                :max="GIMBAL.maxY"
+                                step="1"
+                            />
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label">
+                            <span class="uk-text-small">Z <small>({{ gimbal.z }})</small></span>
+                        </label>
+                        <div class="uk-form-controls">
+                            <input
+                                v-model="gimbal.z"
+                                @change="updateGimbal('z', gimbal.z)"
+                                name="gimbal_z"
+                                class="uk-range"
+                                type="range"
+                                :min="GIMBAL.minZ"
+                                :max="GIMBAL.maxZ"
+                                step="1"
+                            />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="uk-flex uk-flex-center uk-tab" uk-switcher=".head-switcher">
+                <li><a href="#" uk-tooltip="title: Camera">Camera</a></li>
+                <li><a href="#" uk-tooltip="title: Toggles">Toggles</a></li>
+                <li><a href="#" uk-tooltip="title: Bot">Bot</a></li>
+                <li><a href="#" uk-tooltip="title: Gimbal">Gimbal</a></li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -12,7 +109,7 @@
 
 <script>
     // UTL.gui
-    import * as UIL from 'uil';
+    // import * as UIL from 'uil';
     import { GIMBAL } from '@/constants/Gimbal';
     import { getMaxW } from '@/utils/Utility';
 
@@ -24,171 +121,44 @@
         data() {
             return {
                 ui: {},
+                toggle_bec_sx: false,
+                toggle_bec_dx: false,
+                toggle_light: false,
+                toggle_gimbal: false,
+                gimbal: {
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
             };
         },
         setup() {
             const controlStore = useControlStore();
             return {
                 controlStore,
+                GIMBAL,
             };
         },
         methods: {
             updateButton(key) {
                 this.controlStore.updateButton(key);
             },
-            updateToggleBot(value) {
-                this.controlStore.updateButton('bot_on_off');
+            updateToggle(label) {
+                this.controlStore.updateToggle(label);
             },
-            updateToggleBecSx(value) {
-                this.controlStore.updateToggle('toggle_bec_sx', value);
+            updateGimbal(label, value) {
+                this.controlStore.updateGimbal(label, parseInt(value));
             },
-            updateTogglBecDx(value) {
-                this.controlStore.updateToggle('toggle_bec_dx', value);
-            },
-            updateToggleLight(value) {
-                this.controlStore.updateToggle('toggle_light', value);
-            },
-            updateToggleGimbal(value) {
-                this.controlStore.updateToggle('toggle_gimbal', value);
-            },
-            updateGimbalX(value) {
-                this.controlStore.updateGimbal('x', value);
-            },
-            updateGimbalY(value) {
-                this.controlStore.updateGimbal('y', value);
-            },
-            updateGimbalZ(value) {
-                this.controlStore.updateGimbal('z', value);
-            },
-            updateGimbalReset(value) {
-                this.controlStore.updateGimbalReset(value);
-            },
-            generateUI() {
-                this.maxW = getMaxW('center');
-
-                this.ui = new UIL.Gui({
-                    css: 'top:0; left:50%;',
-                    center: true,
-                    w: this.maxW,
-                    target: this.$refs.root,
-                });
-
-                this.ui.add('title', { name: 'Center' });
-                this.ui
-                    .add('button', {
-                        name: 'Switch Gaits',
-                        value: 'switch_gait',
-                    })
-                    .onChange(this.updateButton);
-                this.ui
-                    .add('button', {
-                        name: 'Adjust leg position',
-                        value: 'adjust_leg_position',
-                    })
-                    .onChange(this.updateButton);
-                this.ui.add('empty', { h: 5 });
-                this.ui
-                    .add('bool', {
-                        name: 'Bot OFF',
-                        onName: 'Bot ON',
-                        mode: 1,
-                        value: true,
-                    })
-                    .onChange(this.updateToggleBot);
-                this.ui.add('empty', { h: 5 });
-
-                this.ui
-                    .add('bool', {
-                        name: 'Bec SX OFF',
-                        onName: 'Bec SX ON',
-                        mode: 1,
-                        value: false,
-                    })
-                    .onChange(this.updateToggleBecSx);
-                this.ui
-                    .add('bool', {
-                        name: 'Bec DX OFF',
-                        onName: 'Bec DX ON',
-                        mode: 1,
-                        value: false,
-                    })
-                    .onChange(this.updateTogglBecDx);
-                this.ui
-                    .add('bool', {
-                        name: 'Lights OFF',
-                        onName: 'Lights ON',
-                        mode: 1,
-                        value: false,
-                    })
-                    .onChange(this.updateToggleLight);
-                this.ui
-                    .add('bool', {
-                        name: 'Gimbal OFF',
-                        onName: 'Gimbal ON',
-                        mode: 1,
-                        value: false,
-                    })
-                    .onChange(this.updateToggleGimbal);
-
-                this.ui.add('empty', { h: 5 });
-
-                this.ui
-                    .add('button', {
-                        name: 'Reset Gimbal',
-                        value: 'reset_gimbal',
-                    })
-                    .onChange(this.updateGimbalReset);
-
-                const gimbalGroup = this.ui.add('group', {
-                    name: 'Gimbal Correction',
-                    color: '#E2001C',
-                    h: 30,
-                });
-                gimbalGroup
-                    .add('knob', {
-                        name: 'X',
-                        w: 64,
-                        min: GIMBAL.minX,
-                        max: GIMBAL.maxX,
-                        value: 0,
-                        precision: 0,
-                        step: 1,
-                        color: '#E2001C',
-                        mode: 1,
-                    })
-                    .onChange(this.updateGimbalX);
-                gimbalGroup
-                    .add('knob', {
-                        type: 'knob',
-                        name: 'Y',
-                        w: 64,
-                        min: GIMBAL.minY,
-                        max: GIMBAL.maxY,
-                        value: 0,
-                        precision: 0,
-                        step: 1,
-                        color: '#E2001C',
-                        mode: 1,
-                    })
-                    .onChange(this.updateGimbalY);
-                gimbalGroup
-                    .add('knob', {
-                        type: 'knob',
-                        name: 'Z',
-                        w: 64,
-                        min: GIMBAL.minZ,
-                        max: GIMBAL.maxZ,
-                        value: 0,
-                        precision: 0,
-                        step: 1,
-                        color: '#E2001C',
-                        mode: 1,
-                    })
-                    .onChange(this.updateGimbalZ);
+            updateGimbalReset() {
+                this.controlStore.updateGimbalReset();
+                this.gimbal = {
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                }
             },
         },
         mounted() {
-            this.generateUI();
         },
     };
 </script>

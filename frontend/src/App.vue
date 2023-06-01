@@ -9,6 +9,11 @@
 <style></style>
 
 <script>
+    import UIkit from 'uikit';
+    import Icons from 'uikit/dist/js/uikit-icons';
+
+    UIkit.use(Icons);
+    
     import { version } from '../package.json';
     import { RouterView } from 'vue-router';
 

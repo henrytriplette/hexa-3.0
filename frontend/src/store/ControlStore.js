@@ -64,16 +64,22 @@ export const useControlStore = defineStore('ControlStore', {
 
             if (BUTTONS[key]) socket.updateSocketButton(BUTTONS[key]);
         },
-        updateToggle(key, value) {
-            this.toggle[key] = value;
-            if (TOGGLE[key]) socket.updateSocketToggle(TOGGLE[key], value);
+        updateToggle(key) {
+            this.toggle[key] = !this.toggle[key];
+            if (TOGGLE[key]) socket.updateSocketToggle(TOGGLE[key], this.toggle[key]);
         },
         updateGimbal(axis, value) {
             this.gimbal[axis] = value;
             socket.updateSocketGimbal(this.gimbal);
         },
-        updateGimbalReset(key) {
-            this.gimbal.reset_gimbal = !this.gimbal.reset_gimbal;
+        updateGimbalReset() {
+            this.gimbal = {
+                x: 0,
+                y: 0,
+                z: 0,
+                reset_gimbal: false,
+            };
+
             socket.updateSocketGimbalReset(GIMBAL.gimbal_reset, this.gimbal.reset_gimbal);
         },
     },

@@ -2,8 +2,8 @@
     <div class="center-panel" id="center-panel">
         <div class="uk-width-1-1">
             <ul class="uk-switcher head-switcher">
-                <li class="uk-height-medium">Camera</li>
-                <li class="uk-height-medium">
+                <li class="">Camera</li>
+                <li class="">
                     <a class="uk-button uk-button-primary" @click="updateToggle('toggle_bec_sx')"
                         >Bec SX ON</a
                     >
@@ -17,7 +17,7 @@
                         >Gimbal ON</a
                     >
                 </li>
-                <li class="uk-height-medium">
+                <li class="">
                     <a class="uk-button uk-button-primary" @click="updateButton('switch_gait')"
                         >Switch Gaits</a
                     >
@@ -30,7 +30,7 @@
                         >Bot ON/OFF</a
                     >
                 </li>
-                <li class="uk-height-medium">
+                <li class="">
                     <button class="uk-button uk-button-primary" @click="updateGimbalReset">
                         Reset Gimbal
                     </button>
@@ -108,10 +108,7 @@
 </style>
 
 <script>
-    // UTL.gui
-    // import * as UIL from 'uil';
     import { GIMBAL } from '@/constants/Gimbal';
-    import { getMaxW } from '@/utils/Utility';
 
     // Store
     import { storeToRefs } from 'pinia';

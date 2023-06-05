@@ -46,6 +46,32 @@
             +breakpoint(medium)
                 grid-area: 1 / 3 / 2 / 4
 
+        .buttons-parent
+            display: grid
+            grid-template-columns: repeat(3, 1fr)
+            grid-template-rows: repeat(3, 1fr)
+            grid-column-gap: 0px
+            grid-row-gap: 0px
+
+            .button1
+                grid-area: 1 / 1 / 2 / 2
+            .button2
+                grid-area: 1 / 2 / 2 / 3
+            .button3
+                grid-area: 1 / 3 / 2 / 4
+            .button4
+                grid-area: 2 / 1 / 3 / 2
+            .button5
+                grid-area: 2 / 2 / 3 / 3
+            .button6
+                grid-area: 2 / 3 / 3 / 4
+            .button7
+                grid-area: 3 / 1 / 4 / 2
+            .button8
+                grid-area: 3 / 2 / 4 / 3
+            .button9
+                grid-area: 3 / 3 / 4 / 4
+
     .container-full
         margin: 1rem
 

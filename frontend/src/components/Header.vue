@@ -14,7 +14,7 @@
                     </ul>
                 </div>
                 <div class="uk-navbar-center nav-overlay">
-                    <a class="uk-navbar-item uk-logo" href="#" title="Hexa 3.0">Hexa 3.0</a>
+                    <a class="uk-navbar-item hera-logo" href="#" title="Hexa 3.0">Hexa 3.0</a>
                 </div>
                 <div class="uk-navbar-right nav-overlay">
                     <ul class="uk-navbar-nav">

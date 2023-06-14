@@ -13,9 +13,9 @@
         text-decoration: none
 
 .uk-button-custom
-    border: 1px solid transparent
+    border: 1px solid var(--colors-primary--700)
     border-radius: 3px
-    color: var(--colors-secondary--500)
+    color: var(--colors-primary--500)
     display: block
     font-family: var(--fonts-primary)
     padding: 0.5rem 0.75rem
@@ -25,3 +25,45 @@
         text-decoration: none
         background-color: var(--colors-bg--300)
         border: 1px solid #5d2322
+
+.uk-tab
+    .uk-active
+        a
+            color: var(--colors-primary--300)
+            border-color: var(--colors-primary--300)
+
+.uk-tab
+    a
+        color: var(--colors-primary--600)
+
+    &:hover
+        color: var(--colors-primary--200)
+
+.uk-tab::before
+    border-bottom: none
+    background-color: var(--colors-primary--600)
+    box-shadow: var(--ui-glow)
+    bottom: 0
+    content: ""
+    height: 1px
+    position: absolute
+    left: 0
+    width: 100%
+
+a:hover,
+.uk-link:hover,
+.uk-link-toggle:hover .uk-link
+    color: var(--colors-primary--300)
+    text-decoration: none
+
+.uk-form-label
+    color: var(--colors-tertiary--500)
+
+.uk-button-small
+    font-size: 0.75rem
+    line-height: 0.9rem
+
+.title
+    letter-spacing: 0.035em
+    text-shadow: var(--ui-glow-text--dimmed)
+    text-transform: uppercase
